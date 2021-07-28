@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  padam:
+    build: .
+    container_name: padam
+    restart: always
+    ports:
+      - 8000:8000
+    # env_file: .env
+    volumes:
+      - ./:/usr/src/app/

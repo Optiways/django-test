@@ -15,7 +15,7 @@ class DriverFactory(factory.django.DjangoModelFactory):
 
 
 class BusFactory(factory.django.DjangoModelFactory):
-    licence_place = factory.LazyFunction(fake.license_plate)
+    licence_plate = factory.LazyFunction(fake.license_plate)
 
     class Meta:
         model = models.Bus

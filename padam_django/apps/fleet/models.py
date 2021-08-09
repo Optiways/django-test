@@ -7,6 +7,9 @@ class Driver(models.Model):
     def __str__(self):
         return f"Driver: {self.user.username} (id: {self.pk})"
 
+    def is_available_at(self, date) -> bool:
+        return not any(date >= shift.departure and date <= shift.arrival for shift in self.shifts.all())
+
 
 class Bus(models.Model):
     licence_plate = models.CharField("Name of the bus", max_length=10)
@@ -16,3 +19,6 @@ class Bus(models.Model):
 
     def __str__(self):
         return f"Bus: {self.licence_plate} (id: {self.pk})"
+    
+    def is_available_at(self, date) -> bool:
+        return not any(date >= shift.departure and date <= shift.arrival for shift in self.shifts.all())

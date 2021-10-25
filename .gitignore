@@ -1,1 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*$py.class
+
+# Translations
+*.mo
+*.pot
+
+# virtualenv
+venv/
+ENV/
+# pipenv: https://github.com/kennethreitz/pipenv
+/Pipfile
+
+# Database
 /db.sqlite3
+
+# Editors stuff
+.idea
+.vscode

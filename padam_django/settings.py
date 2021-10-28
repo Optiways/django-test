@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'django_extensions',
     # Internal apps
     'padam_django.apps.common',
-    'padam_django.apps.travel',
     'padam_django.apps.fleet',
     'padam_django.apps.geography',
+    'padam_django.apps.travel',
     'padam_django.apps.users',
 ]
 

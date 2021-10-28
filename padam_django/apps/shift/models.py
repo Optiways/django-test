@@ -12,7 +12,7 @@ class BusStop(models.Model):
         max_length=100,
     )
     is_transfer_stop = models.BooleanField(
-        verbose_name="Transfer stop", default=False
+        verbose_name="Transfer stop", default=False,
     )
     location = models.ForeignKey(
         Place,
@@ -37,6 +37,9 @@ class BusStopTime(models.Model):
         blank=False,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return f"Bus stop in {self.stop.name} at {self.transit_time}"
 
 
 class BusShift(models.Model):
@@ -73,7 +76,7 @@ class BusShift(models.Model):
     )
 
     bus_stops = models.ManyToManyField(
-        BusStop, related_name="shifts_stop", blank=True
+        BusStop, related_name="shifts_stop", blank=True,
     )
 
     @property

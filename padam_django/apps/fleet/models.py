@@ -44,6 +44,5 @@ class BusShift(models.Model):
 class BusStop(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
 
-    # Need to figure out how to obtain name
-    # def __str__(self):
-    #     return f"Place: (id: {self.pk})"
+    def __str__(self):
+        return f"Place: {self.place.name} (id: {self.pk})"

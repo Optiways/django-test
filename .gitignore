@@ -22,3 +22,6 @@ env/
 # Editors stuff
 .idea
 .vscode
+
+# migrations
+migrations/

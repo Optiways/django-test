@@ -1,7 +1,5 @@
 from django.db import models
 
-from padam_django.apps.geography.models import Place
-
 
 class Driver(models.Model):
     user = models.OneToOneField('users.User', on_delete=models.CASCADE, related_name='driver')
@@ -30,6 +28,8 @@ class BusShift(models.Model):
 
     # Constraint Check if instance of shift has bus/driver and is not in timetable of departure/arrival of another
     #   instance, UniqueConstraint doesnt stop from creating instances without the necessary constraints
+    # If I had the time for this , I'd probably need a time delta check between departure/arrival then use it on
+    #   a CheckConstraint
     class Meta:
         # constraint = [
         #     models.CheckConstraint(check=models.Q)
@@ -42,7 +42,7 @@ class BusShift(models.Model):
 
 
 class BusStop(models.Model):
-    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    place = models.ForeignKey("geography.Place", on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Place: {self.place.name} (id: {self.pk})"

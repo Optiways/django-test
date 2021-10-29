@@ -29,7 +29,9 @@ class BusStop(models.Model):
 
 class BusStopTime(models.Model):
     transit_time = models.TimeField(
-        verbose_name="Time of transit", null=False, blank=False
+        verbose_name="Time of transit",
+        null=False,
+        blank=False,
     )
     stop = models.ForeignKey(
         BusStop,
@@ -43,14 +45,15 @@ class BusStopTime(models.Model):
 
 
 class BusShift(models.Model):
-    departure_stop = models.ForeignKey(
+
+    departure_time = models.ForeignKey(
         BusStopTime,
         null=False,
         blank=False,
         on_delete=models.PROTECT,
         related_name="shifts_departure",
     )
-    arrival_stop = models.ForeignKey(
+    arrival_time = models.ForeignKey(
         BusStopTime,
         null=False,
         blank=False,
@@ -65,7 +68,6 @@ class BusShift(models.Model):
         on_delete=models.PROTECT,
         related_name="shifts_driver",
     )
-
     bus = models.ForeignKey(
         Bus,
         verbose_name="Bus",
@@ -74,18 +76,14 @@ class BusShift(models.Model):
         on_delete=models.PROTECT,
         related_name="shifts_bus",
     )
-
     bus_stops = models.ManyToManyField(
-        BusStop, related_name="shifts_stop", blank=True,
+        BusStop, related_name="shifts_stop", blank=False,
+        help_text="Select at least 2 bus stops",
     )
 
-    @property
-    def count_bus_stops(self):
-        return self.bus_stops.count()
-
     def total_shift_time(self):
-        departure = self.departure_stop.transit_time
-        arrival = self.arrival_stop.transit_time
+        departure = self.departure_time.transit_time
+        arrival = self.arrival_time.transit_time
         elapse_time = datetime.strptime(
             arrival, "%H:%M:%S"
         ) - datetime.strptime(departure, "%H:%M:%S")
@@ -94,34 +92,36 @@ class BusShift(models.Model):
 
     @property
     def departure_stop_name(self):
-        return self.departure_stop.stop.name
+        return self.departure_time.stop.name
 
     @property
     def arrival_stop_name(self):
-        return self.arrival_stop.stop.name
+        return self.arrival_time.stop.name
 
     def clean(self):
+        """TODO"""
         from .utils import check_overlap
 
-        if self.arrival_stop.transit_time <= self.departure_stop.transit_time:
+        if not all(hasattr(self, attr) for attr in ["arrival_time", "departure_time", "driver", "bus"]):
+            raise ValidationError("All fields must be filled")
+
+        if self.arrival_time.transit_time <= self.departure_time.transit_time:
             raise ValidationError(
-                "Arrival time cannot be equal or before departure time"
+                "Arrival time cannot be equal or before departure time."
             )
 
-        driver = Driver.objects.get(pk=self.driver.pk)
-        driver_shifts = driver.shifts_driver.all()
-        bus = Bus.objects.get(pk=self.bus.pk)
-        bus_shifts = bus.shifts_bus.all()
+        driver_shifts = self.driver.shifts_driver.exclude(pk=self.id)
+        bus_shifts = self.bus.shifts_bus.exclude(pk=self.id)
 
         if check_overlap(self, driver_shifts):
-            raise ValidationError("Driver already assigned")
+            raise ValidationError("Driver is already assigned.")
 
         if check_overlap(self, bus_shifts):
-            raise ValidationError("Bus already assigned")
+            raise ValidationError("Bus is already assigned.")
 
     def __str__(self):
         return (
             "Bus shift:"
-            f" {self.driver} {self.departure_stop.transit_time}"
-            f"-{self.arrival_stop.transit_time}"
+            f" {self.driver.user.username} {self.departure_time.transit_time}"
+            f"-{self.arrival_time.transit_time}"
         )

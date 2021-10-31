@@ -44,10 +44,12 @@ class BusShiftAdmin(admin.ModelAdmin):
 
 @admin.register(BusStopTime)
 class BusStopTimeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("transit_time", "stop")
+    ordering = ("-pk",)
 
 
 @admin.register(BusStop)
 class BusStopAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("name", "location")
+    ordering = ("-pk",)
 

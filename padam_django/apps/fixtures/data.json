@@ -1,0 +1,1410 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2021-11-01T13:45:49.063Z",
+    "user": 11,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "Bus stop: Francois",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2021-11-01T13:46:02.740Z",
+    "user": 11,
+    "content_type": 10,
+    "object_id": "2",
+    "object_repr": "Bus stop: Martineau",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2021-11-01T13:46:17.814Z",
+    "user": 11,
+    "content_type": 10,
+    "object_id": "3",
+    "object_repr": "Bus stop: Virginie Bruneau",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2021-11-01T13:46:34.359Z",
+    "user": 11,
+    "content_type": 10,
+    "object_id": "4",
+    "object_repr": "Bus stop: Samson",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2021-11-01T13:46:52.293Z",
+    "user": 11,
+    "content_type": 10,
+    "object_id": "5",
+    "object_repr": "Bus stop: Pauline Joly",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2021-11-01T13:47:14.206Z",
+    "user": 11,
+    "content_type": 11,
+    "object_id": "1",
+    "object_repr": "Bus stop in Francois at 08:00:00",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2021-11-01T13:47:20.796Z",
+    "user": 11,
+    "content_type": 11,
+    "object_id": "2",
+    "object_repr": "Bus stop in Martineau at 10:00:00",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2021-11-01T13:47:26.025Z",
+    "user": 11,
+    "content_type": 11,
+    "object_id": "3",
+    "object_repr": "Bus stop in Virginie Bruneau at 12:00:00",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2021-11-01T13:47:40.003Z",
+    "user": 11,
+    "content_type": 11,
+    "object_id": "4",
+    "object_repr": "Bus stop in Samson at 14:00:00",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2021-11-01T13:47:47.739Z",
+    "user": 11,
+    "content_type": 11,
+    "object_id": "5",
+    "object_repr": "Bus stop in Pauline Joly at 16:00:00",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2021-11-01T13:52:32.256Z",
+    "user": 11,
+    "content_type": 12,
+    "object_id": "1",
+    "object_repr": "Bus shift: edith35 08:00:00-12:00:00",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2021-11-01T13:52:49.781Z",
+    "user": 11,
+    "content_type": 12,
+    "object_id": "2",
+    "object_repr": "Bus shift: dblanchard 10:00:00-16:00:00",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2021-11-01T13:53:44.335Z",
+    "user": 11,
+    "content_type": 12,
+    "object_id": "3",
+    "object_repr": "Bus shift: camillechevallier 12:00:00-14:00:00",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 2,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 2,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 2,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 2,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 3,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 3,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 3,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 3,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 4,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 4,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 4,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 4,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 5,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 5,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 5,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 5,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add bus",
+    "content_type": 6,
+    "codename": "add_bus"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change bus",
+    "content_type": 6,
+    "codename": "change_bus"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete bus",
+    "content_type": 6,
+    "codename": "delete_bus"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view bus",
+    "content_type": 6,
+    "codename": "view_bus"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add driver",
+    "content_type": 7,
+    "codename": "add_driver"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change driver",
+    "content_type": 7,
+    "codename": "change_driver"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete driver",
+    "content_type": 7,
+    "codename": "delete_driver"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view driver",
+    "content_type": 7,
+    "codename": "view_driver"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add place",
+    "content_type": 8,
+    "codename": "add_place"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change place",
+    "content_type": 8,
+    "codename": "change_place"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete place",
+    "content_type": 8,
+    "codename": "delete_place"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view place",
+    "content_type": 8,
+    "codename": "view_place"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 9,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 9,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 9,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 9,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add bus stop",
+    "content_type": 10,
+    "codename": "add_busstop"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change bus stop",
+    "content_type": 10,
+    "codename": "change_busstop"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete bus stop",
+    "content_type": 10,
+    "codename": "delete_busstop"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view bus stop",
+    "content_type": 10,
+    "codename": "view_busstop"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add bus stop time",
+    "content_type": 11,
+    "codename": "add_busstoptime"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change bus stop time",
+    "content_type": 11,
+    "codename": "change_busstoptime"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete bus stop time",
+    "content_type": 11,
+    "codename": "delete_busstoptime"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view bus stop time",
+    "content_type": 11,
+    "codename": "view_busstoptime"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add bus shift",
+    "content_type": 12,
+    "codename": "add_busshift"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change bus shift",
+    "content_type": 12,
+    "codename": "change_busshift"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete bus shift",
+    "content_type": 12,
+    "codename": "delete_busshift"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view bus shift",
+    "content_type": 12,
+    "codename": "view_busshift"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "fleet",
+    "model": "bus"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "fleet",
+    "model": "driver"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "geography",
+    "model": "place"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "users",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "shift",
+    "model": "busstop"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "shift",
+    "model": "busstoptime"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "shift",
+    "model": "busshift"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "twd445mdf082trpnhpscw23r3lbwk708",
+  "fields": {
+    "session_data": ".eJxVjMsOgjAURP-la9OUQsqtS_d-A7mvWtSUhMKK-O9CwkKXM-fMbGbAdcnDWnUeRjFX0zTm8lsS8kvLQeSJ5TFZnsoyj2QPxZ602vsk-r6d7t9Bxpr3NTjoySFC9CFQjASEPiVO0oZWemBOkRwFIeDOq7Z-z9AFx6IpamM-XyKZOTw:1mhXcu:vC5coCRcxk2VlLfiWOLaXrnrEGeFjxZ7oRFs9CsPBOE",
+    "expire_date": "2021-11-15T13:45:28.989Z"
+  }
+},
+{
+  "model": "fleet.driver",
+  "pk": 1,
+  "fields": {
+    "user": 6
+  }
+},
+{
+  "model": "fleet.driver",
+  "pk": 2,
+  "fields": {
+    "user": 7
+  }
+},
+{
+  "model": "fleet.driver",
+  "pk": 3,
+  "fields": {
+    "user": 8
+  }
+},
+{
+  "model": "fleet.driver",
+  "pk": 4,
+  "fields": {
+    "user": 9
+  }
+},
+{
+  "model": "fleet.driver",
+  "pk": 5,
+  "fields": {
+    "user": 10
+  }
+},
+{
+  "model": "fleet.bus",
+  "pk": 1,
+  "fields": {
+    "licence_place": "512-NAN-90"
+  }
+},
+{
+  "model": "fleet.bus",
+  "pk": 2,
+  "fields": {
+    "licence_place": "173-TEW-04"
+  }
+},
+{
+  "model": "fleet.bus",
+  "pk": 3,
+  "fields": {
+    "licence_place": "403-NTK-14"
+  }
+},
+{
+  "model": "fleet.bus",
+  "pk": 4,
+  "fields": {
+    "licence_place": "895-EHP-29"
+  }
+},
+{
+  "model": "fleet.bus",
+  "pk": 5,
+  "fields": {
+    "licence_place": "344-NZI-26"
+  }
+},
+{
+  "model": "fleet.bus",
+  "pk": 6,
+  "fields": {
+    "licence_place": "UU-679-GC"
+  }
+},
+{
+  "model": "fleet.bus",
+  "pk": 7,
+  "fields": {
+    "licence_place": "778-ENJ-04"
+  }
+},
+{
+  "model": "fleet.bus",
+  "pk": 8,
+  "fields": {
+    "licence_place": "036-JIE-43"
+  }
+},
+{
+  "model": "fleet.bus",
+  "pk": 9,
+  "fields": {
+    "licence_place": "FZ-262-GE"
+  }
+},
+{
+  "model": "fleet.bus",
+  "pk": 10,
+  "fields": {
+    "licence_place": "711-IAL-67"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 1,
+  "fields": {
+    "name": "avenue Francois",
+    "longitude": "160.484369",
+    "latitude": "30.456331"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 2,
+  "fields": {
+    "name": "chemin Océane Fischer",
+    "longitude": "-87.015229",
+    "latitude": "47.606790"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 3,
+  "fields": {
+    "name": "avenue Martineau",
+    "longitude": "179.388981",
+    "latitude": "-74.187239"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 4,
+  "fields": {
+    "name": "rue Alfred Marin",
+    "longitude": "59.391508",
+    "latitude": "40.579914"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 5,
+  "fields": {
+    "name": "boulevard Benoît Rousseau",
+    "longitude": "142.221572",
+    "latitude": "30.826176"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 6,
+  "fields": {
+    "name": "rue Tristan Guillon",
+    "longitude": "-107.575812",
+    "latitude": "45.096666"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 7,
+  "fields": {
+    "name": "rue Virginie Bruneau",
+    "longitude": "-167.129598",
+    "latitude": "-61.201550"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 8,
+  "fields": {
+    "name": "rue de Langlois",
+    "longitude": "131.160071",
+    "latitude": "72.208290"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 9,
+  "fields": {
+    "name": "avenue de Samson",
+    "longitude": "50.555022",
+    "latitude": "-39.942538"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 10,
+  "fields": {
+    "name": "avenue Roux",
+    "longitude": "154.988901",
+    "latitude": "87.410136"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 11,
+  "fields": {
+    "name": "boulevard Cohen",
+    "longitude": "-32.967154",
+    "latitude": "65.958760"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 12,
+  "fields": {
+    "name": "rue Émile Verdier",
+    "longitude": "127.532518",
+    "latitude": "34.637766"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 13,
+  "fields": {
+    "name": "avenue de Charrier",
+    "longitude": "92.764132",
+    "latitude": "33.772325"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 14,
+  "fields": {
+    "name": "rue de Lefort",
+    "longitude": "95.735558",
+    "latitude": "-44.069014"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 15,
+  "fields": {
+    "name": "rue de Mercier",
+    "longitude": "81.121978",
+    "latitude": "-45.726346"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 16,
+  "fields": {
+    "name": "rue Imbert",
+    "longitude": "4.340695",
+    "latitude": "59.451570"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 17,
+  "fields": {
+    "name": "rue de Aubert",
+    "longitude": "-42.902135",
+    "latitude": "-35.782646"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 18,
+  "fields": {
+    "name": "rue Julien Millet",
+    "longitude": "-33.099835",
+    "latitude": "35.185267"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 19,
+  "fields": {
+    "name": "rue de Aubert",
+    "longitude": "-97.300886",
+    "latitude": "-34.323200"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 20,
+  "fields": {
+    "name": "chemin de Guyot",
+    "longitude": "-14.603136",
+    "latitude": "-48.264296"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 21,
+  "fields": {
+    "name": "rue Pauline Joly",
+    "longitude": "171.362237",
+    "latitude": "20.226912"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 22,
+  "fields": {
+    "name": "rue Pauline Arnaud",
+    "longitude": "160.574808",
+    "latitude": "70.524175"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 23,
+  "fields": {
+    "name": "avenue de Laroche",
+    "longitude": "154.727819",
+    "latitude": "80.700308"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 24,
+  "fields": {
+    "name": "rue Poirier",
+    "longitude": "68.949395",
+    "latitude": "-67.310866"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 25,
+  "fields": {
+    "name": "chemin de Lecoq",
+    "longitude": "7.781723",
+    "latitude": "-44.659656"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 26,
+  "fields": {
+    "name": "avenue Benjamin Gillet",
+    "longitude": "-129.514626",
+    "latitude": "-72.970014"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 27,
+  "fields": {
+    "name": "avenue René Blin",
+    "longitude": "-3.993047",
+    "latitude": "61.759195"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 28,
+  "fields": {
+    "name": "avenue Valentine Le Gall",
+    "longitude": "-156.552979",
+    "latitude": "80.311485"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 29,
+  "fields": {
+    "name": "rue Gonzalez",
+    "longitude": "-167.979093",
+    "latitude": "-12.828840"
+  }
+},
+{
+  "model": "geography.place",
+  "pk": 30,
+  "fields": {
+    "name": "avenue Chevallier",
+    "longitude": "167.583835",
+    "latitude": "62.617296"
+  }
+},
+{
+  "model": "users.user",
+  "pk": 1,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "charlescatherine",
+    "first_name": "Emmanuel",
+    "last_name": "Chartier",
+    "email": "fbrunet@free.fr",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-11-01T13:44:25.668Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 2,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "antoinetterobert",
+    "first_name": "Danielle",
+    "last_name": "Klein",
+    "email": "gayalphonse@legrand.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-11-01T13:44:25.675Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 3,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "nweber",
+    "first_name": "Jeanne",
+    "last_name": "Diaz",
+    "email": "pgomes@seguin.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-11-01T13:44:25.679Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 4,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "penelope24",
+    "first_name": "Grégoire",
+    "last_name": "Remy",
+    "email": "augustin28@coulon.net",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-11-01T13:44:25.681Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 5,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "frederiquemaurice",
+    "first_name": "Émile",
+    "last_name": "Louis",
+    "email": "alice75@meyer.net",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-11-01T13:44:25.683Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 6,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "edith35",
+    "first_name": "Henri",
+    "last_name": "Jacquot",
+    "email": "legrosdaniel@hotmail.fr",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-11-01T13:44:25.740Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 7,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "dblanchard",
+    "first_name": "Benoît",
+    "last_name": "Chartier",
+    "email": "alphonse92@yahoo.fr",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-11-01T13:44:25.744Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 8,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "camillechevallier",
+    "first_name": "Rémy",
+    "last_name": "Leclercq",
+    "email": "morenohonore@joubert.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-11-01T13:44:25.751Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 9,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "manonperez",
+    "first_name": "Gabriel",
+    "last_name": "Robert",
+    "email": "grocher@hotmail.fr",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-11-01T13:44:25.755Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 10,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "diazmadeleine",
+    "first_name": "Élise",
+    "last_name": "Marion",
+    "email": "richard05@club-internet.fr",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2021-11-01T13:44:25.760Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$260000$uIHzUs5gzoygsiFeqD17hT$9W1kh+ZaAcP5x66AuEuISY4a1cQW6goER0dl8wx1ahg=",
+    "last_login": "2021-11-01T13:45:28.985Z",
+    "is_superuser": true,
+    "username": "abderraouf.zerroug",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2021-11-01T13:44:51.073Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "shift.busstop",
+  "pk": 1,
+  "fields": {
+    "name": "Francois",
+    "is_transfer_stop": false,
+    "location": 1
+  }
+},
+{
+  "model": "shift.busstop",
+  "pk": 2,
+  "fields": {
+    "name": "Martineau",
+    "is_transfer_stop": false,
+    "location": 3
+  }
+},
+{
+  "model": "shift.busstop",
+  "pk": 3,
+  "fields": {
+    "name": "Virginie Bruneau",
+    "is_transfer_stop": false,
+    "location": 7
+  }
+},
+{
+  "model": "shift.busstop",
+  "pk": 4,
+  "fields": {
+    "name": "Samson",
+    "is_transfer_stop": false,
+    "location": 9
+  }
+},
+{
+  "model": "shift.busstop",
+  "pk": 5,
+  "fields": {
+    "name": "Pauline Joly",
+    "is_transfer_stop": false,
+    "location": 21
+  }
+},
+{
+  "model": "shift.busstoptime",
+  "pk": 1,
+  "fields": {
+    "transit_time": "08:00:00",
+    "stop": 1
+  }
+},
+{
+  "model": "shift.busstoptime",
+  "pk": 2,
+  "fields": {
+    "transit_time": "10:00:00",
+    "stop": 2
+  }
+},
+{
+  "model": "shift.busstoptime",
+  "pk": 3,
+  "fields": {
+    "transit_time": "12:00:00",
+    "stop": 3
+  }
+},
+{
+  "model": "shift.busstoptime",
+  "pk": 4,
+  "fields": {
+    "transit_time": "14:00:00",
+    "stop": 4
+  }
+},
+{
+  "model": "shift.busstoptime",
+  "pk": 5,
+  "fields": {
+    "transit_time": "16:00:00",
+    "stop": 5
+  }
+},
+{
+  "model": "shift.busshift",
+  "pk": 1,
+  "fields": {
+    "departure_time": 1,
+    "arrival_time": 3,
+    "driver": 1,
+    "bus": 1,
+    "bus_stops": [
+      1,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "shift.busshift",
+  "pk": 2,
+  "fields": {
+    "departure_time": 2,
+    "arrival_time": 5,
+    "driver": 2,
+    "bus": 2,
+    "bus_stops": [
+      2,
+      3,
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "shift.busshift",
+  "pk": 3,
+  "fields": {
+    "departure_time": 3,
+    "arrival_time": 4,
+    "driver": 3,
+    "bus": 3,
+    "bus_stops": [
+      3,
+      4
+    ]
+  }
+}
+]

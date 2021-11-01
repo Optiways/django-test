@@ -1,9 +1,5 @@
-import datetime
-
 from django.test import TestCase
-from django.utils import timezone
 
-from padam_django.apps.shift.models import BusStop
 from padam_django.apps.shift.factories import BusStopFactory
 
 

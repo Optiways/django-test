@@ -12,7 +12,8 @@ class BusStop(models.Model):
         max_length=100,
     )
     is_transfer_stop = models.BooleanField(
-        verbose_name="Transfer stop", default=False,
+        verbose_name="Transfer stop",
+        default=False,
     )
     location = models.ForeignKey(
         Place,
@@ -77,7 +78,9 @@ class BusShift(models.Model):
         related_name="shifts_bus",
     )
     bus_stops = models.ManyToManyField(
-        BusStop, related_name="shifts_stop", blank=False,
+        BusStop,
+        related_name="shifts_stop",
+        blank=False,
         help_text="Select at least 2 bus stops",
     )
 
@@ -105,7 +108,10 @@ class BusShift(models.Model):
 
         from .utils import check_overlap
 
-        if not all(hasattr(self, attr) for attr in ["arrival_time", "departure_time", "driver", "bus"]):
+        if not all(
+            hasattr(self, attr)
+            for attr in ["arrival_time", "departure_time", "driver", "bus"]
+        ):
             raise ValidationError("All fields must be filled")
 
         if self.arrival_time.transit_time <= self.departure_time.transit_time:
@@ -116,12 +122,18 @@ class BusShift(models.Model):
         driver_shifts = self.driver.shifts_driver.exclude(pk=self.id)
         bus_shifts = self.bus.shifts_bus.exclude(pk=self.id)
 
-        if check_overlap(self.departure_time.transit_time,
-                         self.arrival_time.transit_time, driver_shifts):
+        if check_overlap(
+            self.departure_time.transit_time,
+            self.arrival_time.transit_time,
+            driver_shifts,
+        ):
             raise ValidationError("Driver is already assigned.")
 
-        if check_overlap(self.departure_time.transit_time,
-                         self.arrival_time.transit_time, bus_shifts):
+        if check_overlap(
+            self.departure_time.transit_time,
+            self.arrival_time.transit_time,
+            bus_shifts,
+        ):
             raise ValidationError("Bus is already assigned.")
 
     def __str__(self):

@@ -5,7 +5,7 @@ from padam_django.apps.fleet.factories import DriverFactory, BusFactory
 import factory
 from faker import Faker
 
-fake = Faker(['fr'])
+fake = Faker(["fr"])
 
 
 class BusStopFactory(factory.django.DjangoModelFactory):

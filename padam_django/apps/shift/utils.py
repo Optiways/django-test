@@ -1,13 +1,12 @@
-from datetime import datetime
-
+from datetime import time
 from django.db.models import QuerySet
-from django.core.exceptions import ValidationError
-from padam_django.apps.shift.models import BusShift
 
 
-def check_overlap(instance_departure: str, instance_arrival: str, plannings: QuerySet) -> bool:
+def check_overlap(
+    instance_departure: time, instance_arrival: time, plannings: QuerySet
+) -> bool:
     """Check if the travel times overlap for the bus or the driver.
-        Return True if it is.
+    Return True if it is.
     """
 
     for planning in plannings:

@@ -18,17 +18,17 @@ class BusShiftForm(forms.ModelForm):
 @admin.register(BusShift)
 class BusShiftAdmin(admin.ModelAdmin):
     list_display = ("bus", "driver", "departure_time", "arrival_time")
-    list_filter = ("bus", "driver",)
+    list_filter = (
+        "bus",
+        "driver",
+    )
     ordering = ("-pk",)
     form = BusShiftForm
 
     fieldsets = (
-        ("Fleet informations",
-            {
-                "fields": ("driver", "bus")
-            }
-         ),
-        ("Time informations",
+        ("Fleet informations", {"fields": ("driver", "bus")}),
+        (
+            "Time informations",
             {
                 "fields": ("departure_time", "arrival_time"),
             },
@@ -52,4 +52,3 @@ class BusStopTimeAdmin(admin.ModelAdmin):
 class BusStopAdmin(admin.ModelAdmin):
     list_display = ("name", "location")
     ordering = ("-pk",)
-

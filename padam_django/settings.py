@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&r2)+_fdqxe2dtc@1vizr6tsh6!1cesaptlfgj@ug*%3=fnq=i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'padam_django.apps.fleet',
     'padam_django.apps.geography',
     'padam_django.apps.users',
+    "padam_django.apps.shift"
 ]
 
 MIDDLEWARE = [

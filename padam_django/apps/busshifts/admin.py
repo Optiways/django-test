@@ -8,12 +8,14 @@ from padam_django.apps.common.utils.time_utils import overlap
 
 
 class BusShiftForm(ModelForm):
+    """Form that verifies the integrity of the bus shifts"""
     class Meta:
         model = BusShift
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(BusShiftForm, self).__init__(*args, **kwargs)
+        # Display stops sorted by time in the multi-select box.
         self.fields['stops'].queryset = BusStop.objects.order_by('time')
 
     def clean(self):
@@ -27,17 +29,16 @@ class BusShiftForm(ModelForm):
 
             start = stops.order_by('time').first().time
             end = stops.order_by('time').last().time
+            other_shifts_for_bus = BusShift.objects.filter(Q(bus=bus) & ~Q(pk=self.instance.pk))
+            other_shifts_for_driver = BusShift.objects.filter(Q(driver=driver) & ~Q(pk=self.instance.pk))
 
-            # Check if the bus is already used.
-            other_shifts = BusShift.objects.filter(Q(bus=bus) & ~Q(pk=self.instance.pk))
-            for s in other_shifts:
-                if overlap((s.get_start_time(), s.get_end_time()), (start, end)):
+            # Check if the bus is already in use.
+            for shift in other_shifts_for_bus:
+                if overlap((shift.get_start_time(), shift.get_end_time()), (start, end)):
                     raise ValidationError(f"The bus {bus} is already used for these dates")
-
-            # Check if the driver is already drive a bus at this date.
-            other_shifts = BusShift.objects.filter(Q(driver=driver) & ~Q(pk=self.instance.pk))
-            for s in other_shifts:
-                if overlap((s.get_start_time(), s.get_end_time()), (start, end)):
+            # Check if the driver is already driving a bus on this date.
+            for shift in other_shifts_for_driver:
+                if overlap((shift.get_start_time(), shift.get_end_time()), (start, end)):
                     raise ValidationError(f"The driver {driver} is already driving at theses dates")
 
         return self.cleaned_data

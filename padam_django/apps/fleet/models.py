@@ -5,7 +5,7 @@ class Driver(models.Model):
     user = models.OneToOneField('users.User', on_delete=models.CASCADE, related_name='driver')
 
     def __str__(self):
-        return f"{self.user.username}"
+        return f"{self.user.first_name} {self.user.last_name}"
 
 
 class Bus(models.Model):

@@ -12,4 +12,4 @@ class Place(models.Model):
         unique_together = (("longitude", "latitude"), )
 
     def __str__(self):
-        return f"Place: {self.name} (id: {self.pk})"
+        return f"{self.name}"

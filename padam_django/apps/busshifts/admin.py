@@ -34,11 +34,11 @@ class BusShiftForm(ModelForm):
 
             # Check if the bus is already in use.
             for shift in other_shifts_for_bus:
-                if overlap((shift.get_start_time(), shift.get_end_time()), (start, end)):
+                if overlap((shift.start_time, shift.end_time), (start, end)):
                     raise ValidationError(f"The bus {bus} is already used for these dates")
             # Check if the driver is already driving a bus on this date.
             for shift in other_shifts_for_driver:
-                if overlap((shift.get_start_time(), shift.get_end_time()), (start, end)):
+                if overlap((shift.start_time, shift.end_time), (start, end)):
                     raise ValidationError(f"The driver {driver} is already driving at theses dates")
 
         return self.cleaned_data

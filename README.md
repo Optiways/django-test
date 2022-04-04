@@ -91,3 +91,40 @@ en temps que d'autres ...
  - Privilégier la qualité et les bonnes pratiques.
  - Vous pouvez réduire le périmètre du projet si vous manquez de temps. Une ébauche de réponse est déjà une bonne chose.
  - Soyez prêt à présenter le sujet, à justifier vos choix et à parler de comment vous auriez fait les parties que vous avez laisser de côté.
+
+## Résultats du test
+
+Voici quelques notes à propos de la résolution du test.
+
+### Mise en place du stack technique
+
+* Ce projet a été réalisé sur une distribution Linux Mint 20.3 xfce. 
+* Les versions récommandées de python (3.7) et django (3.2.5) ont été utilisées. Ainsi que les librairies indiquées sur le fichier [requirements.txt](https://github.com/AaronMillOro/django-test/blob/master/requirements.txt). 
+* L'environement virtuel a été mise en place en utilisant la librairie [pyenv](https://github.com/pyenv/pyenv)
+* La sémantique des commits est celle du projet [gitmoji](https://gitmoji.dev/). 
+* Les indications du README.md seront écrites en français, mais les commits et commentaires dans le code seront faites en anglais.
+
+
+### Implémentation des modèles
+
+Les modèles **BusShift** et **BusStop** ont été déclarés sur l'applications **reservations**
+
+### Interface de gestion
+
+Pour utiliser l'interface django-admin, il est nécessaire de créer un login avec mot de passe en utilisant la commande suivante:
+
+
+`    python3 manage.py createsuperuser
+`
+
+Après demarrage du projet (make run) se positioner sur l'interface de authentification depuis le navigateur.
+
+
+`    http://127.0.0.1:8000/admin
+`
+
+La création et modification des réservations est disponible depuis l'application **reservations**
+
+
+`    http://127.0.0.1:8000/admin/reservations/busshift/add/
+`

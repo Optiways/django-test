@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'padam_django.apps.fleet',
     'padam_django.apps.geography',
     'padam_django.apps.users',
+    'padam_django.apps.reservations',
 ]
 
 MIDDLEWARE = [
@@ -116,7 +117,7 @@ AUTH_USER_MODEL = "users.User"
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 

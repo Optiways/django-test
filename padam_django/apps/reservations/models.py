@@ -1,7 +1,7 @@
 from django.db import models
-from django.db.models import CheckConstraint, F, Q, UniqueConstraint
 
 from padam_django.apps.fleet.models import Bus, Driver
+from padam_django.apps.geography.models import Place
 
 
 class BusShift(models.Model):
@@ -12,7 +12,12 @@ class BusShift(models.Model):
     driver = models.ForeignKey("fleet.Driver", on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural = ("bus trips")
+        verbose_name_plural = "bus shifts"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["bus", "driver"], name="unique_driver_bus"
+            ),
+        ]
 
 
 class BusStop(models.Model):
@@ -24,11 +29,28 @@ class BusStop(models.Model):
     ending point.
     """
     bus_shift =  models.ForeignKey("BusShift", on_delete=models.CASCADE)
-    start_point = models.CharField(max_length=50)
-    end_point = models.CharField(max_length=50)
-    start_time = models.DateTimeField("Time of departure")
-    end_time = models.DateTimeField("Time of arrival")
+    start_point = models.ForeignKey(
+        "geography.Place", on_delete=models.CASCADE, related_name="departure" 
+    )
+    end_point = models.ForeignKey(
+        "geography.Place", on_delete=models.CASCADE, related_name="arrival"
+    )
+    start_time = models.DateTimeField(
+        verbose_name="Time of departure", null=False
+    )
+    end_time = models.DateTimeField(
+        verbose_name="Time of arrival", null=False
+    )
 
     class Meta:
-        verbose_name_plural = ("bus stops")
-        
+        verbose_name_plural = "bus stops"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["bus_shift", "start_time"], name="specific_stop"
+            ),
+            models.CheckConstraint(
+                check=models.Q(end_time__gt=models.F("start_time")), 
+                name="coherent_time"
+            )
+        ]
+        ordering = ("-end_time", )

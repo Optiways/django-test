@@ -13,3 +13,10 @@ class Place(models.Model):
 
     def __str__(self):
         return f"Place: {self.name} (id: {self.pk})"
+
+
+class BusStop(models.Model):
+    stop = models.OneToOneField(Place, on_delete=models.CASCADE, primary_key=True)
+
+    def __str__(self):
+        return f"Bus stop: {self.stop} "

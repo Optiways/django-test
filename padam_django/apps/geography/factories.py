@@ -15,3 +15,5 @@ class PlaceFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = models.Place
+
+

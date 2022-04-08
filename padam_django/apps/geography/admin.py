@@ -10,3 +10,7 @@ class PlaceAdmin(admin.ModelAdmin):
 @admin.register(models.BusStop)
 class BusStopAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(models.BusShift)
+class BusSShiftAdmin(admin.ModelAdmin):
+    pass

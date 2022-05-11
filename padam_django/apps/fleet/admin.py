@@ -11,3 +11,13 @@ class BusAdmin(admin.ModelAdmin):
 @admin.register(models.Driver)
 class DriverAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.BusShift)
+class BusAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.BusStop)
+class DriverAdmin(admin.ModelAdmin):
+    pass

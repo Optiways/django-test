@@ -15,8 +15,8 @@ class BusShiftFactory(factory.django.DjangoModelFactory):
 
 
 class BusStopFactory(factory.django.DjangoModelFactory):
-    shift = factory.SubFactory('padam_django.apps.geography.factories.PlaceFactory')
-    place = factory.SubFactory('padam_django.apps.schedules.factories.DriverFactory')
+    shift = factory.SubFactory('padam_django.apps.schedules.factories.BusShiftFactory')
+    place = factory.SubFactory('padam_django.apps.geography.factories.PlaceFactory')
     stoptime = fake.time
     class Meta:
         model = models.BusStop

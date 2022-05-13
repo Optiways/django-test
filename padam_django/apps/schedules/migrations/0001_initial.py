@@ -9,31 +9,71 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('fleet', '0002_auto_20211109_1456'),
-        ('geography', '0001_initial'),
+        ("fleet", "0002_auto_20211109_1456"),
+        ("geography", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='BusShift',
+            name="BusShift",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('bus', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fleet.bus')),
-                ('driver', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fleet.driver')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "bus",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="fleet.bus"
+                    ),
+                ),
+                (
+                    "driver",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="fleet.driver"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='BusStop',
+            name="BusStop",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('stoptime', models.TimeField(verbose_name='Stop time')),
-                ('place', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='geography.place')),
-                ('shift', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='schedules.busshift')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("stoptime", models.TimeField(verbose_name="Stop time")),
+                (
+                    "place",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="geography.place",
+                    ),
+                ),
+                (
+                    "shift",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="schedules.busshift",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='busshift',
-            name='stops',
-            field=models.ManyToManyField(through='schedules.BusStop', to='geography.Place'),
+            model_name="busshift",
+            name="stops",
+            field=models.ManyToManyField(
+                through="schedules.BusStop", to="geography.Place"
+            ),
         ),
     ]

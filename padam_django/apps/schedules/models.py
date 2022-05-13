@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Max, Min, Q
 
+
 class BusShift(models.Model):
     driver = models.ForeignKey("fleet.Driver", on_delete=models.CASCADE)
     bus = models.ForeignKey("fleet.Bus", on_delete=models.CASCADE)

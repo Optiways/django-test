@@ -3,3 +3,6 @@ run: ## Run the test server.
 
 install: ## Install the python requirements.
 	pip install -r requirements.txt
+
+run: ## Run migration
+	python manage.py makemigrations && python manage.py migrate

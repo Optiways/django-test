@@ -1,9 +1,11 @@
 from django.contrib import admin
+from .models import BusStop, BusShift
 
-from . import models
+class BusStopInline(admin.TabularInline):
+    model = BusStop
+    extra = 10
 
+class BusShiftAdmin(admin.ModelAdmin):
+    inlines = [BusStopInline]
 
-@admin.register(models.BusStop)
-class BusStopAdmin(admin.ModelAdmin):
-    pass
-
+admin.site.register(BusShift, BusShiftAdmin)

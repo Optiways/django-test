@@ -10,3 +10,7 @@ class BusStop(models.Model):
 
     def __str__(self):
         return f"Stop: {self.stop}-{self.place.name} Bus: {self.bus.licence_plate} (id: {self.pk})"
+
+
+class BusShift(models.Model):
+    driver = models.ForeignKey('fleet.Driver', null=True, on_delete=models.CASCADE)

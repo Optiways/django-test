@@ -7,3 +7,7 @@ from . import models
 class BusStopAdmin(admin.ModelAdmin):
     pass
 
+@admin.register(models.BusShift)
+class BusShiftAdmin(admin.ModelAdmin):
+    pass
+

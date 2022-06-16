@@ -8,7 +8,7 @@ class BusStop(models.Model):
     stop = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"Stop: {self.stop}-{self.place.name} Bus: {self.bus.licence_plate} (id: {self.pk})"
+        return f"Stop: {self.stop}-{self.place.name} (id: {self.pk})"
 
 
 class BusShift(models.Model):

@@ -5,7 +5,7 @@ import datetime
 class BusShift(models.Model):
     bus = models.ForeignKey('fleet.Bus', null=True, on_delete=models.CASCADE)
     driver = models.ForeignKey('fleet.Driver', null=True, on_delete=models.CASCADE)
-    # busstop = models.ForeignKey(BusStop, null=True, on_delete=models.CASCADE)
+
     def __str__(self):
         return f"Shift: {self.bus.licence_plate} - {self.driver.user.username} (id: {self.pk})"
 

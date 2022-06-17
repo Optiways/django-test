@@ -10,11 +10,8 @@ class BusStopInline(admin.TabularInline):
 class BusShiftAdmin(admin.ModelAdmin):
     inlines = [BusStopInline]
     list_display = ('driver', 'bus')
-    readonly_fields = ['arr_time', 'dep_time']
-    fields = ['driver', 'bus', 'dep_time', 'arr_time']
-    # fields = ['driver', 'bus', 'ride_dep_time', 'ride_arr_time']
-    # readonly_fields = ['ride_arr_time', 'ride_dep_time']
-
+    readonly_fields = ['arr_time', 'dep_time', 'available_drivers']
+    fields = ['driver', 'bus', 'dep_time', 'arr_time', 'available_drivers']
 
 class BusStopAdmin(admin.ModelAdmin):
     list_display = ('place', 'time', 'busshift')

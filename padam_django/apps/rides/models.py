@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models import Max, Min
-
+from padam_django.apps.fleet.models import Driver
 
 class BusShift(models.Model):
     bus = models.ForeignKey('fleet.Bus', null=True, on_delete=models.CASCADE)
@@ -28,8 +28,19 @@ class BusShift(models.Model):
         b.save()
         return dep_time
     
+    @property
+    def available_drivers(self):
+        all_rides = BusShift.objects.all()
+        start_ride = self.ride_dep_time
+        end_ride = self.ride_arr_time
+        filter_params = dict(ride_arr_time__gte=start_ride, ride_dep_time__lte=end_ride)
+        busy_drivers = all_rides.filter(**filter_params).values_list('driver__user__username')
+        filters = dict(user__username__in = list(busy_drivers[0]))
+        available_drivers = Driver.objects.all().exclude(**filters)
+        return available_drivers
+    
     def __str__(self):
-        return f"Shift: { self.ride_dep_time.strftime('%d/%m/%y %H:%M') } - { self.ride_arr_time.strftime('%d/%m/%y %H:%M') } (id: {self.pk})"
+        return f"Shift: { self.dep_time.strftime('%d/%m/%y %H:%M') } - { self.arr_time.strftime('%d/%m/%y %H:%M') } (id: {self.pk})"
 
 class BusStop(models.Model):
     place = models.ForeignKey('geography.Place', null=True, on_delete=models.CASCADE)

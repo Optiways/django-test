@@ -8,6 +8,7 @@ class BusShift(models.Model):
     ride_arr_time = models.DateTimeField('ride arrival time', null=True)
     ride_dep_time = models.DateTimeField('ride departure time', null=True)
     
+    @property
     def arr_time(self):
         b = BusShift.objects.get(id=self.pk)
         arr_time = b.busstop_set.aggregate(Max('time'))['time__max']
@@ -17,6 +18,7 @@ class BusShift(models.Model):
         b.save()
         return arr_time
 
+    @property
     def dep_time(self):
         b = BusShift.objects.get(id=self.pk)
         dep_time = b.busstop_set.aggregate(Min('time'))['time__min']

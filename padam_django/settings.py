@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'padam_django.apps.fleet',
     'padam_django.apps.geography',
     'padam_django.apps.users',
+    'padam_django.apps.ride'
 ]
 
 MIDDLEWARE = [
@@ -81,10 +82,14 @@ WSGI_APPLICATION = 'padam_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
+DATABASES = {   # TODO : add env variable before deployment
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "padam-dev",
+        'USER': "postgres",
+        'PASSWORD': "root",
+        'HOST': "127.0.0.1",
+        'PORT': 5432
     }
 }
 

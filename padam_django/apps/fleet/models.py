@@ -27,11 +27,12 @@ class BusStop(models.Model):
     def __str__(self):
         return f'{self.bus} : {self.arrival.strftime("%H:%M:%S")}'
 
+
 class BusShift(models.Model):
     uid = models.UUIDField(primary_key=True,  default=uuid.uuid4, editable=False)
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
-    bus_stop = models.ForeignKey(BusStop, on_delete=models.CASCADE, blank=True, null=True, related_name='stops')
+    bus_stop = models.ForeignKey(BusStop, on_delete=models.CASCADE, blank=True, null=True)
     departure = models.DateTimeField(default=datetime.now())
     arrival = models.DateTimeField(default=datetime.now())
     travel_time = models.DateTimeField(null=True)

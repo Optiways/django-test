@@ -6,7 +6,7 @@ from django import forms
 
 # App import.
 from . import models
-from .validators import is_bus_shift_valid
+from .validators import is_time_slot_valid
 from .utils import update_fields_instance
 
 class BusShiftForm(forms.ModelForm):
@@ -32,7 +32,7 @@ class BusShiftForm(forms.ModelForm):
         driver = self.cleaned_data.get('driver')
 
         # Verify bus shift validity
-        is_bus_shift_valid(
+        is_time_slot_valid(
             driver=driver,
             bus=bus,
             new_departure=departure, 
@@ -68,7 +68,7 @@ class BusShiftForm(forms.ModelForm):
             new_bus_shift = update_fields_instance(bus_shift, fields_dict, save=True)
             new_bus_stop = update_fields_instance(bus_stop, fields_dict, save=False)
             # Add bus stop foreign key
-            
+
             new_bus_shift.bus_stop = new_bus_stop
             new_bus_shift.save()
 
@@ -80,4 +80,5 @@ class BusShiftForm(forms.ModelForm):
         if commit:
             instance.uid = uid
             instance.save()
+            
         return instance

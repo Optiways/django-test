@@ -2,11 +2,6 @@
 from . import models
 from django import forms
 
-def update_fields_instance(instance, fields, save=False):
-    [setattr(instance, key, val) for key, val in fields.items()]
-    if save:
-        instance.save()
-
 
 def is_time_stop_between_existing_shift(Q, driver, bus, time_stop):
     # if driver busy
@@ -20,7 +15,6 @@ def is_time_stop_between_existing_shift(Q, driver, bus, time_stop):
 
     # is bus busy
     Q2 = Q.filter(
-        # departure__day=time_stop,
         bus=bus,
         departure__date__gte=time_stop, 
         arrival__date__lte=time_stop
@@ -51,7 +45,6 @@ def get_bus_shift_time(driver, bus):
 
 
 def update_bus_shift(instance, departure, arrival):
-    # If busstop instance uid doesn't exists create BusStop
     instance.bus_stop_id = instance.uid
     instance.departure = departure
     instance.arrival = arrival

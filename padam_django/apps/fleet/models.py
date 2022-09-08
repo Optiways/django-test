@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
-from django.db import models
 
+from django.db import models
 
 class Driver(models.Model):
     user = models.OneToOneField('users.User', on_delete=models.CASCADE, related_name='driver', primary_key=True)

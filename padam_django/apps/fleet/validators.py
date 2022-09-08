@@ -1,10 +1,10 @@
 
 # Sys import.
 import datetime
-from re import A
 
 # Django import.
 from django.conf import settings
+
 # App import
 from .models import BusShift
 from .utils import is_time_stop_between_existing_shift

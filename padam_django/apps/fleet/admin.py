@@ -4,13 +4,13 @@ from django.contrib import admin
 
 # App import
 from . import models
-from .forms import BusShiftForm
-
+from .forms import BusShiftForm, BusStopForm
 
 
 @admin.register(models.BusStop)
 class BusStopAdmin(admin.ModelAdmin):
-    list_display = ('uid', 'driver', 'bus', 'arrival',)
+    form = BusStopForm
+    list_display = ('uid', 'driver', 'bus', 'time_stop',)
 
 @admin.register(models.BusShift)
 class BusShiftAdmin(admin.ModelAdmin):

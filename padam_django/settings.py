@@ -137,5 +137,4 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-BUSSHIFT_MINUTES_INTERVAL = 5 
+BUS_SHIFT_MINUTES_INTERVAL = 5 

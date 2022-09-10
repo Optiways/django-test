@@ -11,13 +11,25 @@ from .utils import is_time_stop_between_existing_shift
 
 
 def is_bus_time_stop_slot_valid(driver, bus, new_time_stop):
-    """ Verify bus and driver shift overlap
+    """ Check if bus time slot is valid
 
     Args:
-        departure (_type_, optional): time of shift departure. Defaults to departure.
-        arrival (_type_, optional): time of shift arrival. Defaults to arrival.
+        driver (str): 
+            Bus driver we want the shifts to be filtered
+
+        bus (str): 
+            Driver bus we want the shifts to be filtered
+
+        new_time_stop (models.DateTimeField):
+            Time stop we want to valid
+    
+    Returns:
+        Boolean: Time slot validation
     """
     # Get all BusShifts
     Q = BusShift.objects.all()
-    is_time_stop_between_existing_shift(Q, driver, bus, new_time_stop)
 
+    if is_time_stop_between_existing_shift(Q, driver, bus, new_time_stop):
+        return True
+    else:
+        return False    

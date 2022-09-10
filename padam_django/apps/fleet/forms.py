@@ -8,20 +8,24 @@ from django import forms
 from . import models
 from .validators import is_bus_time_stop_slot_valid
 from .utils import update_bus_shift, get_bus_shift_time
+from .utils import update_instance_dict
 
 class BusStopForm(forms.ModelForm):
-    """ Form that allow to modify and create BusShift instance
+    """ Form that allow to modify and create BusStop instance and create or update BusShift automatically
+
+    Args:
+        forms (instance): Instance to create the ModelForm (BusStop)
 
     Raises:
-        forms.ValidationError: _description_
+        forms.ValidationError: Raise form error if time_stop format is invalid
+        forms.ValidationError: Raise form error if BusShift could not be created 
+
+    Returns:
+        BusStop: BusStop instance
     """
     class Meta:
         model = models.BusStop
         exclude = ['']
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
 
     def clean(self):
         # Get form input
@@ -39,14 +43,18 @@ class BusStopForm(forms.ModelForm):
         )
 
     def save(self, commit=True):
-        """ Save instance and update BusStop if needed
+        """ Save form instance model and update BusStop if needed in database
 
-        IF bus shift instance  (uid) | (driver && bus) exists 
-        THEN update existing BusShift instance
-        ELSE create BusShift instance
+        IF 
+            bus shift instance  (uid) | (driver && bus) exists 
+        THEN 
+            update existing BusShift instance
+        ELSE 
+            create BusShift instance
 
         Args:
-            commit (bool, optional): If commit==True changes are applied on database. Defaults to True.
+            commit (bool, optional): 
+                Persist changes in database. Defaults to True.
 
         Returns:
             instance: BusShiftForm model instance created or updated
@@ -57,23 +65,21 @@ class BusStopForm(forms.ModelForm):
         # Get shift attributes
         bus, driver = instance.bus, instance.driver
         departure, arrival, travel_time = get_bus_shift_time(driver, bus)
-
         uid = uuid.UUID(str(instance.uid))
         
-        # OPTI: get instance dict
-        update_dict = {
+        input_dict = {
             'uid': uid,
-            'driver': driver,
-            'bus': bus,
             'bus_stop': instance,
-            'departure': departure, 
+            'departure': departure,
             'arrival': arrival,
             'travel_time': travel_time
         }
 
-        print('update_dict', update_dict)
+        print('input_dict', input_dict)
 
-        update_dict_valid = {k: v for k, v in update_dict.items() if v is not None}
+        new_instance_dict = update_instance_dict(instance, input_dict)
+
+        update_dict_valid = {k: v for k, v in new_instance_dict.items() if v is not None}
 
         if not models.BusShift.objects.filter(uid=instance.uid).exists():
             bus_shift_instance = models.BusShift.objects.create(**update_dict_valid)

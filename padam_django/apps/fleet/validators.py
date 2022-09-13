@@ -1,4 +1,3 @@
-
 # Sys import.
 import datetime
 
@@ -32,4 +31,4 @@ def is_bus_time_stop_slot_valid(driver, bus, new_time_stop):
     if is_time_stop_between_existing_shift(Q, driver, bus, new_time_stop):
         return True
     else:
-        return False    
+        return False   

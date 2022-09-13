@@ -12,6 +12,11 @@ class BusStopAdmin(admin.ModelAdmin):
     form = BusStopForm
     list_display = ('uid', 'driver', 'bus', 'time_stop',)
 
+@admin.register(models.BusShift)
+class BusShiftAdmin(admin.ModelAdmin):
+    list_display = ('uid', 'driver', 'bus', 'departure', 'arrival', 'travel_time')
+    readonly_fields = ( 'travel_time', 'date',)
+
 @admin.register(models.Bus)
 class BusAdmin(admin.ModelAdmin):
     pass 

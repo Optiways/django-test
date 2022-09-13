@@ -1,6 +1,10 @@
+# System import.
+from datetime import datetime
 
+# Django import.
 from django import forms
 
+# App import
 from . import models
 
 def is_time_stop_between_existing_shift(Q, driver, bus, time_stop):
@@ -32,8 +36,8 @@ def is_time_stop_between_existing_shift(Q, driver, bus, time_stop):
     # if driver busy
     DriverExistingShifts = Q.filter(
         driver=driver,
-        departure__date__gte=time_stop, 
-        arrival__date__lte=time_stop
+        departure__gte=time_stop, 
+        arrival__lte=time_stop,
     )
     if DriverExistingShifts.exists():
         raise forms.ValidationError('Driver is already in shift')
@@ -41,8 +45,8 @@ def is_time_stop_between_existing_shift(Q, driver, bus, time_stop):
     # is bus busy
     BusExistingShifts = Q.filter(
         bus=bus,
-        departure__date__gte=time_stop, 
-        arrival__date__lte=time_stop
+        departure__gte=time_stop, 
+        arrival__lte=time_stop
     )
     if BusExistingShifts.exists():
         raise forms.ValidationError('Bus is already in shift')
@@ -50,7 +54,7 @@ def is_time_stop_between_existing_shift(Q, driver, bus, time_stop):
     return True
 
 
-def get_bus_shift_time(driver, bus):
+def get_bus_shift_time(driver, bus, new_time_stop):
     """ Get shift departure and arrival time by ordering driver and bus BusStop instances
 
     Args:
@@ -65,48 +69,55 @@ def get_bus_shift_time(driver, bus):
     """
     departure, arrival, travel_time = [None]*3
 
-    departure_model = models.BusStop.objects.filter(driver=driver, bus=bus).order_by('time_stop').first()
-    if departure_model is not None:
-        departure = departure_model.time_stop
-        
-    arrival_model = models.BusStop.objects.filter(driver=driver, bus=bus).order_by('time_stop').last()   
-    if arrival_model is not None:
-        arrival = arrival_model.time_stop
+    departure_model = models.BusStop.objects.filter(driver=driver, bus=bus, time_stop__date=new_time_stop.date()).order_by('time_stop').first()
+    if departure_model is not None:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        if new_time_stop > departure_model.time_stop:
+            departure = departure_model.time_stop
+            arrival = new_time_stop
+        else:
+            departure = new_time_stop
+            arrival = departure_model.time_stop
+    else:
+        departure = new_time_stop
 
     if arrival is not None and departure is not None:
         travel_time = str(arrival - departure)
-
-    print('shift time', travel_time)
+        print(travel_time)
+        # date_format = '%H-%M-%S'
+        # travel_time = datetime.strptime(str(delta.hours)+'-'+str(delta.minutes)+'-'+str(delta.seconds), date_format)
+        # travel_time = datetime.strptime(str(arrival), date_format) - datetime.strptime(str(departure), date_format)
 
     return departure, arrival, travel_time
 
 
-def update_bus_shift(instance, departure, arrival):
-    """ Update bus_shift attribute with shift time values and bus stop id
+# def update_or_create_bus_shift(instance, departure, arrival):
+#     """ Update bus_shift attribute with shift time values and bus stop id
 
-    Args:
-        instance (Django Model): 
-            Django Model instance to update
+#     Args:
+#         instance (Django Model): 
+#             Django Model instance to update
 
-        departure (models.DateTimeField): 
-            First stop of given shift instance
+#         departure (models.DateTimeField): 
+#             First stop of given shift instance
 
-        arrival (models.DateTimeField): 
-            Last stop of given shift instance
+#         arrival (models.DateTimeField): 
+#             Last stop of given shift instance
 
-    Returns:
-        Django Model instance: Django model instance updated and saved in database
-    """
-    instance.bus_stop_id = instance.uid
-    instance.departure = departure
-    instance.arrival = arrival
-    instance.travel_time = arrival - instance
-    instance.save()
+#     Returns:
+#         Django Model instance: Django model instance updated and saved in database
+#     """
+#     if instance is None:
+#         instance = models.BusShift()
+#     instance.bus_stop_id = instance.uid
+#     instance.departure = departure
+#     instance.arrival = arrival
+#     instance.travel_time = arrival - instance
+#     instance.save()
 
-    return instance
+    # return instance
 
 
-def update_instance_dict(instance, dict):
+def get_update_instance_dict(instance, input_dict):
     """ Get instance dict and update it with another dict
 
     Args:
@@ -120,9 +131,14 @@ def update_instance_dict(instance, dict):
         dict: Instance dict updated with given dict
     """
     assert instance.__dict__ is not None, "Error NullObject: Form instance dict is null!"
-    print('dict', instance.__dict__)
-    new_instance_dict = instance.__dict__.update(dict)
-    print('new_dict', new_instance_dict)
-    assert new_instance_dict is not None, "Error NullObject: Updated Form instance dict is null!"
 
+    new_instance_dict = instance.__dict__.copy()
+    new_instance_dict.update(input_dict)
+    new_instance_dict.pop('_state')
+    new_instance_dict.pop('time_stop')
+    new_instance_dict.pop('uid')
+
+    update_dict_valid = {k: v for k, v in new_instance_dict.items() if v is not None}
+
+    print('new_dict', update_dict_valid)
     return new_instance_dict

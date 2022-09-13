@@ -31,14 +31,18 @@ class BusStop(models.Model):
 
     def get_queryset(self):
         # Method1: Return only BusStop of same date
-        return super().get_queryset().filter(time_stop__date=self.time_stop.date)
+        bus_stop = BusStop.objects.get(
+            date = self.time_stop.date(),
+            driver = self.driver,
+        )
+        return bus_stop.stops.all()
         # Method2: Return only BusShift BusStop related
 
 class BusShift(models.Model):
     uid = models.UUIDField(primary_key=True,  default=uuid.uuid4, editable=False)
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
-    bus_stop = models.ForeignKey(BusStop, on_delete=models.CASCADE, blank=True, null=True)
+    bus_stop = models.ForeignKey(BusStop, on_delete=models.CASCADE, blank=True, null=True, related_name='stops')
     departure = models.DateTimeField(editable=False, blank=True, null=True)
     arrival = models.DateTimeField(editable=False, blank=True, null=True)
     travel_time = models.CharField(max_length=50, editable=False, blank=True, null=True)

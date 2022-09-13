@@ -38,11 +38,15 @@ class BusStopForm(forms.ModelForm):
         if time_stop is None:
             raise forms.ValidationError('Time stop is incorrect')
 
+        departure, arrival, travel_time = get_bus_shift_time(driver, bus, time_stop)
         # Verify bus shift validity
         is_bus_time_stop_slot_valid(
             driver=driver,
             bus=bus,
             new_time_stop=time_stop, 
+            new_departure=departure,
+            new_arrival=arrival,
+            new_travel_time=travel_time
         )
 
     def save(self, commit=True):

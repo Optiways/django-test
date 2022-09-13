@@ -34,22 +34,22 @@ def is_time_stop_between_existing_shift(Q, driver, bus, time_stop):
     """
 
     # if driver busy
-    DriverExistingShifts = Q.filter(
+    Q_driver_existing_shifts = Q.filter(
         driver=driver,
-        departure__gte=time_stop, 
-        arrival__lte=time_stop,
+        departure__lte=time_stop, 
+        arrival__gte=time_stop,
     )
-    if DriverExistingShifts.exists():
-        raise forms.ValidationError('Driver is already in shift')
+    if Q_driver_existing_shifts.exists():
+        raise forms.ValidationError('Driver is already in shift at this time')
 
     # is bus busy
-    BusExistingShifts = Q.filter(
+    Q_bus_existing_shifts = Q.filter(
         bus=bus,
-        departure__gte=time_stop, 
-        arrival__lte=time_stop
+        departure__lte=time_stop, 
+        arrival__gte=time_stop
     )
-    if BusExistingShifts.exists():
-        raise forms.ValidationError('Bus is already in shift')
+    if Q_bus_existing_shifts.exists():
+        raise forms.ValidationError('Bus is already in shift at this time')
 
     return True
 

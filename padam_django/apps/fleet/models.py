@@ -7,7 +7,6 @@ from django.utils import timezone
 
 class Driver(models.Model):
     user = models.OneToOneField('users.User', on_delete=models.CASCADE, related_name='driver', primary_key=True)
-
     def __str__(self):
         return f"Driver: {self.user.username} (id: {self.pk})"
 
@@ -25,18 +24,11 @@ class BusStop(models.Model):
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
     time_stop = models.DateTimeField(default=timezone.now, unique=True)
-    
-    def __str__(self):
-        return f'{self.bus} : {self.time_stop.strftime("%H:%M:%S")}'
+    date = models.DateField(default=None, blank=True, null=True)
+    last_update = models.DateTimeField(default=timezone.now)
 
-    def get_queryset(self):
-        # Method1: Return only BusStop of same date
-        bus_stop = BusStop.objects.get(
-            date = self.time_stop.date(),
-            driver = self.driver,
-        )
-        return bus_stop.stops.all()
-        # Method2: Return only BusShift BusStop related
+    def __str__(self):
+        return f'{self.time_stop.strftime("%H:%M:%S")}'
 
 class BusShift(models.Model):
     uid = models.UUIDField(primary_key=True,  default=uuid.uuid4, editable=False)
@@ -46,7 +38,9 @@ class BusShift(models.Model):
     departure = models.DateTimeField(editable=False, blank=True, null=True)
     arrival = models.DateTimeField(editable=False, blank=True, null=True)
     travel_time = models.CharField(max_length=50, editable=False, blank=True, null=True)
-    date = models.DateField(default=timezone.now)
+    date = models.DateField(default=None, blank=True, null=True)
+    last_update = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.uid.hex
+    

@@ -15,3 +15,11 @@ class PlaceFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = models.Place
+
+
+class BusStopFactory(factory.django.DjangoModelFactory):
+    name = factory.LazyFunction(fake.city)
+    place = factory.SubFactory(PlaceFactory)
+
+    class Meta:
+        model = models.BusStop

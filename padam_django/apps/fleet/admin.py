@@ -11,3 +11,11 @@ class BusAdmin(admin.ModelAdmin):
 @admin.register(models.Driver)
 class DriverAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.BusShift)
+class BusShiftAdmin(admin.ModelAdmin):
+    list_filter = (
+        ("driver", admin.RelatedOnlyFieldListFilter),
+        ("bus", admin.RelatedOnlyFieldListFilter),
+    )

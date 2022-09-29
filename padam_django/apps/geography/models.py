@@ -13,3 +13,11 @@ class Place(models.Model):
 
     def __str__(self):
         return f"Place: {self.name} (id: {self.pk})"
+
+class BusStop(models.Model):
+    name = models.CharField("Name of Bus Stop", max_length=100)
+    # using Place to define Bus Stop location
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="places")
+    
+    def __str__(self):
+        return f"Bus Stop: {self.name} (id: {self.pk})"

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block  title %}
+    Bus Shift Create
+{% endblock %}
+
+{% block  breadcrumb %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'fleet:bus_shift_all' %}">Fleet List</a></li>
+            <li class="breadcrumb-item" aria-current="page">Create</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <h1>Bus Shift Create</h1>
+    {{ form.non_field_errors }}<br>
+
+    <form action="{% url 'fleet:bus_shift_create' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Create">
+    </form>
+{% endblock %}

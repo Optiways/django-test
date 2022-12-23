@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block  title %}
+    Bus Shift List
+{% endblock %}
+
+{% block  breadcrumb %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">>Fleet</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <h1>Bus Shift</h1>
+
+    <a class="btn btn-primary" href="{% url 'fleet:bus_shift_create' %}" role="button">Add Shift</a>
+
+    <table class="table-striped">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th scope="col">Bus</th>
+            <th scope="col">Driver</th>
+            <th scope="col">Heure de départ</th>
+            <th scope="col">Heure d'arrivée</th>
+            <th scope="col">Temps de trajet</th>
+            <th scope="col">Nombre de stops</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for bus_shift in object_list %}
+            <tr>
+                <td><a href="{% url 'fleet:bus_shift_delete' bus_shift.pk %}">Delete</a></td>
+                <td><a href="{% url 'fleet:bus_shift_update' bus_shift.pk %}">Edit</a></td>
+                <td>{{ bus_shift.bus }}</td>
+                <td>{{ bus_shift.driver }}</td>
+                <td>{{ bus_shift.departure_date }}</td>
+                <td>{{ bus_shift.arrival_date }}</td>
+                <td>{{ bus_shift.travel_time }}</td>
+                <td>{{ bus_shift.stops_count }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">No Shifts yet.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

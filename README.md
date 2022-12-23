@@ -1,3 +1,13 @@
+# rendu
+
+Bonjour,
+
+voici une base pour de rendu, une interface minimale a ete mise en place pour la gestion des shifts à l'url `http://127.0.0.1:8000/fleet/shifts/`, cependant il n'y a pas d'interface pour gérer les `BusStop` mais cela peu etre réalisé par l'interface admin.
+
+hormis l'interface des `BusStop` (et l'interface global a retravailler), il manque des validateurs si on ajoute un shift depuis la zone admin
+
+cordialement
+
 # Test technique Django / Backend
 
 L'objectif de l'exercice ci-dessous est de modéliser une base de données à partir de spécifications métiers et de 

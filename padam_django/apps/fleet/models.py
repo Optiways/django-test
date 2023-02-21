@@ -16,3 +16,12 @@ class Bus(models.Model):
 
     def __str__(self):
         return f"Bus: {self.licence_plate} (id: {self.pk})"
+
+
+class BusStop(models.Model):
+    place = models.ForeignKey("geography.Place", on_delete=models.CASCADE)
+    buses = models.ManyToManyField("fleet.Bus", related_name="stops")
+    departure_time = models.TimeField()
+
+    def __str__(self):
+        return f"Bus Stop: {self.place.name} (id: {self.pk})"

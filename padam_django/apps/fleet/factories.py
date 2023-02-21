@@ -1,8 +1,8 @@
 import factory
 from faker import Faker
 
-from . import models
-
+from padam_django.apps.fleet import models
+from padam_django.apps.geography.factories import PlaceFactory
 
 fake = Faker(["fr"])
 
@@ -19,3 +19,11 @@ class BusFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = models.Bus
+
+
+class BusStopFactory(factory.django.DjangoModelFactory):
+    place = factory.SubFactory(PlaceFactory)
+    departure_time = factory.LazyFunction(fake.time)
+
+    class Meta:
+        model = models.BusStop

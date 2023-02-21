@@ -16,3 +16,31 @@ class Bus(models.Model):
 
     def __str__(self):
         return f"Bus: {self.licence_plate} (id: {self.pk})"
+
+
+class BusStop(models.Model):
+    place = models.ForeignKey("geography.Place", on_delete=models.CASCADE)
+    buses = models.ManyToManyField("fleet.Bus", related_name="stops")
+    departure_time = models.TimeField()
+
+    def __str__(self):
+        return f"Bus Stop: {self.place.name} (id: {self.pk})"
+
+    class Meta:
+        ordering = ["departure_time"]
+
+
+class BusShift(models.Model):
+    bus = models.ForeignKey("fleet.Bus", on_delete=models.CASCADE, related_name="shifts")
+    driver = models.ForeignKey("fleet.Driver", on_delete=models.CASCADE, related_name="shifts")
+    stops = models.ManyToManyField("fleet.BusStop", related_name="shifts")
+    departure_time = models.TimeField()
+    arrival_time = models.TimeField()
+
+    @property
+    def duration(self) -> str:
+        hours, minutes = get_time_diff_between(self.departure_time, self.arrival_time)
+        return f"{hours:02d}h{minutes:02d}"
+
+    def __str__(self):
+        return f"Bus Shift: {self.driver.user} - {self.bus.licence_plate} - {self.duration} (id: {self.pk})"

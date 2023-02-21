@@ -1,8 +1,8 @@
 import factory
 from faker import Faker
 
-from . import models
-
+from padam_django.apps.fleet import models
+from padam_django.apps.geography.factories import PlaceFactory
 
 fake = Faker(["fr"])
 

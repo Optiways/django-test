@@ -11,6 +11,8 @@ __pycache__/
 # virtualenv
 venv/
 ENV/
+.envs/
+
 # pipenv: https://github.com/kennethreitz/pipenv
 /Pipfile
 

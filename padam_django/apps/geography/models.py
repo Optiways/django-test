@@ -9,7 +9,7 @@ class Place(models.Model):
 
     class Meta:
         # Two places cannot be located at the same coordinates.
-        unique_together = (("longitude", "latitude"), )
+        unique_together = (("longitude", "latitude"),)
 
     def __str__(self):
         return f"Place: {self.name} (id: {self.pk})"

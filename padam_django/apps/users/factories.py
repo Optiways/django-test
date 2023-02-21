@@ -4,7 +4,7 @@ from faker import Faker
 from . import models
 
 
-fake = Faker(['fr'])
+fake = Faker(["fr"])
 
 
 class UserFactory(factory.django.DjangoModelFactory):

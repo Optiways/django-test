@@ -16,7 +16,10 @@ build:
 start:
 	docker $(RUN) $(VOLUME) $(PORT) $(PROJECT_NAME)
 
-init: build start
+migrate:
+	docker $(RUN) $(VOLUME) $(PROJECT_NAME) /bin/bash -c "./manage.py migrate"
+
+init: build migrate start
 
 shell:
 	docker $(RUN) $(VOLUME) $(PROJECT_NAME) /bin/bash -c "./manage.py shell+"

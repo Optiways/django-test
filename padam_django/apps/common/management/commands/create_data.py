@@ -10,6 +10,7 @@ class Command(BaseCommand):
         management.call_command("create_users", number=5)
         management.call_command("create_bus_stops", number=5)
         management.call_command("create_bus_shifts", number=5)
-        management.call_command("create_drivers", number=5)
-        management.call_command("create_buses", number=10)
+        # Already created with bus stops and shifts
+        # management.call_command("create_drivers", number=5)
+        # management.call_command("create_buses", number=10)
         management.call_command("create_places", number=30)

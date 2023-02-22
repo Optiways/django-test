@@ -1,7 +1,7 @@
-MODULES = ["re", "json", "pprint"]
+MODULES = ["re", "json", "pprint", "time"]
 
 APPS_MODULES = [
-    ("padam_django.apps.fleet.models", "Driver,Bus"),
+    ("padam_django.apps.fleet.models", "Driver, Bus, BusStop, BusShift"),
     ("padam_django.apps.geography.models", "Place"),
     ("padam_django.apps.users.models", "User"),
 ]

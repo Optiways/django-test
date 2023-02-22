@@ -22,6 +22,7 @@ class BusFactory(factory.django.DjangoModelFactory):
 
 
 class BusStopFactory(factory.django.DjangoModelFactory):
+    bus = factory.SubFactory(BusFactory)
     place = factory.SubFactory(PlaceFactory)
     departure_time = factory.LazyFunction(fake.time)
 

@@ -1,5 +1,7 @@
 from django.db import models
 
+from padam_django.apps.fleet.services import get_time_diff_between
+
 
 class Driver(models.Model):
     user = models.OneToOneField("users.User", on_delete=models.CASCADE, related_name="driver")
@@ -20,8 +22,8 @@ class Bus(models.Model):
 
 class BusStop(models.Model):
     place = models.ForeignKey("geography.Place", on_delete=models.CASCADE)
-    buses = models.ManyToManyField("fleet.Bus", related_name="stops")
     departure_time = models.TimeField()
+    bus = models.ForeignKey("fleet.Bus", null=True, blank=True, related_name="stops", on_delete=models.SET_NULL)
 
     def __str__(self):
         return f"Bus Stop: {self.place.name} (id: {self.pk})"

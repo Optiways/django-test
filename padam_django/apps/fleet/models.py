@@ -6,7 +6,7 @@ class Driver(models.Model):
     user = models.OneToOneField("users.User", on_delete=models.CASCADE, related_name="driver")
 
     def __str__(self):
-        return f"Driver: {self.user.username} (id: {self.pk})"
+        return f"{self.user.username} (id: {self.pk})"
 
 
 class Bus(models.Model):
@@ -16,7 +16,7 @@ class Bus(models.Model):
         verbose_name_plural = "Buses"
 
     def __str__(self):
-        return f"Bus: {self.licence_plate} (id: {self.pk})"
+        return f"{self.licence_plate} (id: {self.pk})"
 
 
 class BusStop(models.Model):
@@ -27,7 +27,7 @@ class BusStop(models.Model):
     )
 
     def __str__(self):
-        return f"Bus Stop: {self.place.name} (id: {self.pk})"
+        return f"{self.place.name} (id: {self.pk})"
 
     class Meta:
         ordering = ["departure_time"]
@@ -68,4 +68,4 @@ class BusShift(models.Model):
         super(BusShift, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Bus Shift: {self.driver.user} - {self.bus.licence_plate} - {self.duration} (id: {self.pk})"
+        return f"{self.driver.user} - {self.bus.licence_plate} - {self.duration} (id: {self.pk})"

@@ -1,7 +1,5 @@
 from django.db import models
 
-from padam_django.apps.fleet.services import get_time_diff_between
-
 
 class Driver(models.Model):
     user = models.OneToOneField("users.User", on_delete=models.CASCADE, related_name="driver")
@@ -23,7 +21,9 @@ class Bus(models.Model):
 class BusStop(models.Model):
     place = models.ForeignKey("geography.Place", on_delete=models.CASCADE)
     departure_time = models.TimeField()
-    bus = models.ForeignKey("fleet.Bus", null=True, blank=True, related_name="stops", on_delete=models.SET_NULL)
+    bus = models.ForeignKey(
+        "fleet.Bus", null=True, blank=True, related_name="stops", on_delete=models.SET_NULL
+    )
 
     def __str__(self):
         return f"Bus Stop: {self.place.name} (id: {self.pk})"
@@ -41,6 +41,9 @@ class BusShift(models.Model):
 
     @property
     def duration(self) -> str:
+        """Get shift duration in hours:minutes"""
+        # TODO: Circular import between services - models, need to check it
+        from padam_django.apps.fleet.services import get_time_diff_between
         hours, minutes = get_time_diff_between(self.departure_time, self.arrival_time)
         return f"{hours:02d}h{minutes:02d}"
 

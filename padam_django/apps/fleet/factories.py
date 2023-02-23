@@ -33,8 +33,6 @@ class BusStopFactory(factory.django.DjangoModelFactory):
 class BusShiftFactory(factory.django.DjangoModelFactory):
     bus = factory.SubFactory(BusFactory)
     driver = factory.SubFactory(DriverFactory)
-    departure_time = factory.LazyFunction(fake.time)
-    arrival_time = factory.LazyFunction(fake.time)
 
     class Meta:
         model = models.BusShift

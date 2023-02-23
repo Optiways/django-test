@@ -24,6 +24,7 @@ class BusShitAdmin(admin.ModelAdmin):
     list_filter = ("bus", "driver")
     search_fields = ("bus__licence_plate", "driver__user__username")
     autocomplete_fields = ("bus", "driver", "stops")
+    readonly_fields = ["departure_time", "arrival_time"]
 
     def total_stops(self, obj):
         return obj.stops.count()

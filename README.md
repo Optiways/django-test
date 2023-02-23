@@ -1,5 +1,7 @@
 # Test technique Django / Backend
 
+> /!\ N"oubliez pas de remplir votre fichier```.envs/.env.dev``` avant de démarrer le projet
+
 L'objectif de l'exercice ci-dessous est de modéliser une base de données à partir de spécifications métiers et de 
 concevoir une interface simple de gestion de trajets de bus, en utilisant l'admin de Django.
 
@@ -22,9 +24,24 @@ Pour réaliser le test, pensez à fork ce repository. Idéalement, ouvrir une PR
  nous vous conseillons.
  - La base de donnée est au choix. Le projet est configuré pour utiliser `sqlite` par défaut.
 
+### Initialiser le projet
+
+Prérequis:
+- Installer [Docker](https://docs.docker.com/engine/install/)
+- Remplir votre fichier ```.envs/.env.dev```  
+
+
+```make init```
+
 ### Démarrer le projet
 
-*Depuis votre virtualenv Python 3.7*:
+* Depuis votre Docker *
+
+```
+make start
+```
+
+*Depuis votre virtualenv Python 3.7:
 
 ```
 make install

@@ -5,8 +5,6 @@ from django.db.models.query import QuerySet
 from django.utils import timezone
 
 from padam_django.apps.fleet.models.bus_stop_model import BusStop
-from padam_django.apps.fleet.models.bus_model import Bus
-from padam_django.apps.fleet.models.driver_model import Driver
 from padam_django.apps.fleet.exceptions import (
     DriverOtherShiftsOverlapException,
     BusOtherShiftsOverlapException,
@@ -38,16 +36,13 @@ class BusShift(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        if self.bus_has_overlapping_shifts():
-            raise BusOtherShiftsOverlapException(
-                "Chosen bus can't be assigned to shift."
-            )
-        elif self.driver_has_overlapping_shifts():
-            raise DriverOtherShiftsOverlapException(
-                "Choosen driver can't be assigned to shift."
-            )
-        else:
-            return super().save(*args, **kwargs)
+        ordered_stops = self.get_ascending_linked_stops()
+        self.update_stops_related_fields(ordered_stops)
+
+        # Must be done after update_stops_related_fields
+        self.update_total_duration()
+
+        return super().save(*args, **kwargs)
 
     def bus_has_overlapping_shifts(self) -> bool:
         chosen_bus_shifts: QuerySet[BusShift] = self.bus.shifts
@@ -82,16 +77,6 @@ class BusShift(models.Model):
             .exists()
         )
 
-    def update_on_linked_stop_change(self):
-        ordered_stops = self.get_ascending_linked_stops()
-        self.update_stops_related_fields(ordered_stops)
-
-        # Must be done after update_stops_related_fields
-        self.update_total_duration()
-
-        self.linked_stops_modifications_only_save()
-        return
-
     def update_total_duration(self) -> None:
         self.total_duration = self.end_datetime - self.start_datetime
         return
@@ -125,9 +110,6 @@ class BusShift(models.Model):
         else:
             self.end_datetime = DEFAULT_DATETIME_FOR_MISSING_STOPS
         return
-
-    def linked_stops_modifications_only_save(self):
-        return super().save()
 
     def __str__(self):
         return f"BusShift: {self.bus} by {self.driver} from {self.start_datetime} to {self.end_datetime} (id: {self.pk})"

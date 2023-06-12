@@ -6,3 +6,6 @@ install: ## Install the python requirements.
 
 migrate: ## Make migrations
 	python manage.py migrate
+
+makemigrations: ## Generate database migrations from models state
+	python manage.py makemigrations

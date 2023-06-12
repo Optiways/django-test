@@ -4,3 +4,11 @@ class BusOtherShiftsOverlapException(Exception):
 
 class DriverOtherShiftsOverlapException(Exception):
     pass
+
+
+class StopWouldOverlapBusOtherShifts(Exception):
+    pass
+
+
+class StopWouldOverlapDriverOtherShifts(Exception):
+    pass

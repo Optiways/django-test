@@ -46,4 +46,4 @@ class DriverAdmin(admin.ModelAdmin):
 
 @admin.register(models.BusStop)
 class BusStopAdmin(admin.ModelAdmin):
-    readonly_fields = ("shift",)
+    pass

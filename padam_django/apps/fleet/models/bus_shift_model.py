@@ -47,8 +47,7 @@ class BusShift(models.Model):
                 "Choosen driver can't be assigned to shift."
             )
         else:
-            super().save(*args, **kwargs)
-        return
+            return super().save(*args, **kwargs)
 
     def bus_has_overlapping_shifts(self) -> bool:
         chosen_bus_shifts: QuerySet[BusShift] = self.bus.shifts
@@ -87,6 +86,7 @@ class BusShift(models.Model):
         ordered_stops = self.get_ascending_linked_stops()
         self.update_stops_related_fields(ordered_stops)
 
+        # Must be done after update_stops_related_fields
         self.update_total_duration()
 
         self.linked_stops_modifications_only_save()
@@ -127,8 +127,7 @@ class BusShift(models.Model):
         return
 
     def linked_stops_modifications_only_save(self):
-        super().save()
-        return
+        return super().save()
 
     def __str__(self):
         return f"BusShift: {self.bus} by {self.driver} from {self.start_datetime} to {self.end_datetime} (id: {self.pk})"

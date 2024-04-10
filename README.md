@@ -1,30 +1,26 @@
-# Test technique Django / Backend
+# Test technique Django / React
 
-L'objectif de l'exercice ci-dessous est de modéliser une base de données à partir de spécifications métiers et de 
-concevoir une interface simple de gestion de trajets de bus, en utilisant l'admin de Django.
-
-Pour réaliser le test, pensez à fork ce repository. Idéalement, ouvrir une PR à la fin.
+L'objectif de l'exercice ci-dessous est de concevoir une interface simple de gestion de trajets de bus.
+Pour réaliser le test, penser à fork ce repository. Idéalement, ouvrir une PR à la fin.
 
 ## Critères d'évaluation
 
-- Documentation et clarté du code
-- Modélisation de la base de donnée
-- Maîtrise du framework Django
+- Compréhension de la modélisation
+- Clarté du code
+- Maîtrise des framework Django et React
 
 ## Stack Technique
 
 | Nom    | Version |
-| ------ | ------- |
+|--------|---------|
 | Python | 3.7     |
 | Django | 3.2.5   |
+| React  | 18.2.0  |
 
- - Le projet à été réalisé en utilisant Python 3.7. Vous êtes libre d'utiliser une autre version mais c'est celle que 
- nous vous conseillons.
- - La base de donnée est au choix. Le projet est configuré pour utiliser `sqlite` par défaut.
 
 ### Démarrer le projet
 
-*Depuis votre virtualenv Python 3.7*:
+*Depuis votre virtualenv*:
 
 ```
 make install
@@ -32,7 +28,7 @@ make migrate
 make run
 ```
 
-Des scripts sont à votre disposition pour vous permettre de rapidement créer de la donnée et de prendre le projet en 
+Des scripts sont à votre disposition pour vous permettre de rapidement créer des données et de prendre le projet en 
 main:
 
  - `create_data`
@@ -40,11 +36,12 @@ main:
  - `create_drivers`
  - `create_places`
  - `create_users`
+ - `create_busshifts`
 
 Par exemple:
 
 ```
-python manage.py create_drivers -n 5
+python manage.py create_busshifts -n 5
 ```
 
 ## Sujet
@@ -58,36 +55,28 @@ Un trajet en bus (`BusShift`) est composé des éléments suivants:
 - Entre 2 et une infinité d'arrêts (`BusStop`).
 - L'heure de départ est déterminée par l'heure de passage au premier arrêt.
 - L'heure d'arrivée est déterminée par l'heure de passage au dernier arrêt.
-- Il est possible de déduire le temps total nécessaire pour effectuer le trajet depuis l'heure de départ et l'heure d'arrivée.
+- Un même bus ne peut être assigné, en même temps, à plusieurs trajets dont les heures de début et fin se 
+chevaucheraient.
+- Il en va de même pour les chauffeurs.
 
-La structure de projet qui vous est proposée comprends déjà les models suivants:
+La structure de projet qui vous est proposée comprend déjà les models suivants:
  - `Bus`
  - `Driver`
- - `Place`
- - `User` (étends le model [AbstractUser de Django](https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#substituting-a-custom-user-model))
+ - `Place` 
+ - `BusShift`
+ - `BusStop`
+ - `User` (étend le model [AbstractUser de Django](https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#substituting-a-custom-user-model))
 
 ### Objectifs
 
-#### Implémenter les modèles `BusShift` and `BusStop` à la base de code existante
-
-L'implémentation de ces deux modèles est libre et laissée à votre appréciation. Les contraintes métiers suivantes 
-doivent être respectées:
-
- - Un même bus ne peut être assigné, en même temps, à plusieurs trajets dont les heures de début et fin se 
- chevaucheraient.
- - Il en va de même pour les chauffeurs.
-
 #### Fournir une interface de gestion des trajets de bus
 
-Il doit être possible, pour un utilisateur, de créer ou de modifier des trajets de bus (`BusShift`) en utilisant l'admin
-de django.
-
-**Note**: Il existe plusieurs solutions pour concevoir cette fonctionnalité. Certaines seront peut être plus couteuse
-en temps que d'autres ... 
+Il doit être possible de créer ou de modifier des trajets de bus (`BusShift`) en utilisant l'app React.
+Les potentielles erreurs lors de la création ou la modification doivent être affichées à l'utilisateur. 
 
 ### Conseils
 
- - Ne passez pas plus de 4 heures sur un sujet (le but est d'évaluer vos compétences, pas de réduire votre temps libre à néant ;-))
- - Privilégier la qualité et les bonnes pratiques.
- - Vous pouvez réduire le périmètre du projet si vous manquez de temps. Une ébauche de réponse est déjà une bonne chose.
- - Soyez prêt à présenter le sujet, à justifier vos choix et à parler de comment vous auriez fait les parties que vous avez laisser de côté.
+ - Ne passez pas plus de 2 heures sur un sujet (le but est d'évaluer vos compétences, pas de réduire votre temps libre à néant ;-))
+ - Privilégiez la qualité et les bonnes pratiques.
+ - Vous pouvez réduire le périmètre du projet si vous manquez de temps.
+ - Soyez prêt à présenter le sujet, à justifier vos choix et à parler de comment vous auriez fait les parties que vous avez laissées de côté.

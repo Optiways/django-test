@@ -17,9 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from .api.bus.view import BusViewSet
+from .api.bus_shift.views import BusShiftViewSet
+from .api.driver.views import DriverViewSet
+from .api.user.views import UserViewSet
+from .api.stop.views import BusStopViewSet
 
 router = routers.DefaultRouter()
 router.register(r'buses', BusViewSet)
+router.register(r'bus_shifts', BusShiftViewSet)
+router.register(r'drivers', DriverViewSet)
+router.register(r'users', UserViewSet)
+router.register(r'stops', BusStopViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

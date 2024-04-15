@@ -62,7 +62,7 @@ ROOT_URLCONF = 'padam_django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "padam_django" / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block  title %}
+    Bus Shift Create
+{% endblock %}
+
+{% block  breadcrumb %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'fleet:bus_shift_all' %}">Fleet List</a></li>
+            <li class="breadcrumb-item" aria-current="page">Delete</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ object }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <h1>Bus Shift Update</h1>
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        {{ form }}
+        <input type="submit" value="Delete">
+    </form>
+{% endblock %}

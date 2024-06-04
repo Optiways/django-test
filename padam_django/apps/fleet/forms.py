@@ -1,25 +1,43 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, ValidationError
+from django.forms import ModelForm
 
 from .models import BusShift, BusStop
 
 
 class BusStopForm(forms.ModelForm):
+    """
+    Form for creating and updating BusStop instances.
+
+    Attributes:
+        Meta: Metadata for the form, specifying the model and fields.
+    """
+
     class Meta:
         model = BusStop
         fields = "__all__"
 
     def clean(self):
+        """
+        Validates the form data.
+
+        Returns:
+            dict: The cleaned form data.
+        
+        Raises:
+            ValidationError: If validation fails.
+        """
         cleaned_data = super().clean()
         arrival_time = cleaned_data.get("arrival_time")
         departure_time = cleaned_data.get("departure_time")
 
+        # Ensure either arrival time or departure time is provided
         if arrival_time is None and departure_time is None:
             raise ValidationError(
                 "Either Arrival time or Departure time must be provided."
             )
 
+        # Ensure arrival time is before departure time
         if arrival_time and departure_time and arrival_time <= departure_time:
             raise ValidationError("Arrival time must be before departure time.")
 
@@ -27,28 +45,69 @@ class BusStopForm(forms.ModelForm):
 
 
 class BusShiftAdminForm(ModelForm):
+    """
+    Form for creating and updating BusShift instances in admin.
+
+    Attributes:
+        Meta: Metadata for the form, specifying the model and fields.
+    """
+
     class Meta:
         model = BusShift
         fields = "__all__"
 
     def clean(self):
+        """
+        Validates the form data.
+
+        Returns:
+            dict: The cleaned form data.
+        
+        Raises:
+            ValidationError: If validation fails.
+        """
         cleaned_data = super().clean()
         bus = cleaned_data.get("bus")
         driver = cleaned_data.get("driver")
         stops = cleaned_data.get("stops")
 
+        # Validate minimum number of stops
         self._validate_minimum_stops(stops)
+
+        # Get start and end times of the shift
         start_time, end_time = self._get_shift_times(stops)
+
+        # Validate shift times
         self._validate_shift_times(start_time, end_time)
+
+        # Validate no overlapping shifts
         self._validate_no_overlapping_shifts(bus, driver, start_time, end_time)
 
         return cleaned_data
 
     def _validate_minimum_stops(self, stops):
+        """
+        Validates that the number of stops is at least 2.
+        
+        Args:
+            stops (QuerySet): Queryset of stops for the shift.
+        
+        Raises:
+            ValidationError: If the number of stops is less than 2.
+        """
         if not stops or len(stops) < 2:
             raise ValidationError("A BusShift must have at least 2 stops.")
 
     def _get_shift_times(self, stops):
+        """
+        Retrieves the start and end times of the shift based on stops.
+        
+        Args:
+            stops (QuerySet): Queryset of stops for the shift.
+        
+        Returns:
+            tuple: A tuple containing the start and end times of the shift.
+        """
         start_time = (
             stops.exclude(departure_time__isnull=True)
             .order_by("departure_time")
@@ -64,16 +123,50 @@ class BusShiftAdminForm(ModelForm):
         return start_time, end_time
 
     def _validate_shift_times(self, start_time, end_time):
+        """
+        Validates that both start time and end time are defined.
+        
+        Args:
+            start_time (datetime): The start time of the shift.
+            end_time (datetime): The end time of the shift.
+        
+        Raises:
+            ValidationError: If either start time or end time is not defined.
+        """
         if not start_time or not end_time:
             raise ValidationError(
                 "Both start time and end time must be defined for the shift."
             )
 
     def _validate_no_overlapping_shifts(self, bus, driver, start_time, end_time):
+        """
+        Validates that there are no overlapping shifts for the same bus or driver.
+        
+        Args:
+            bus (Bus): The bus for the shift.
+            driver (Driver): The driver for the shift.
+            start_time (datetime): The start time of the shift.
+            end_time (datetime): The end time of the shift.
+        
+        Raises:
+            ValidationError: If there are overlapping shifts for the same bus or driver.
+        """
         self._check_overlapping_shifts(bus, start_time, end_time, "bus")
         self._check_overlapping_shifts(driver, start_time, end_time, "driver")
 
     def _check_overlapping_shifts(self, entity, start_time, end_time, entity_type):
+        """
+        Checks for overlapping shifts for a specific entity.
+        
+        Args:
+            entity: The entity (bus or driver) for which to check overlapping shifts.
+            start_time (datetime): The start time of the shift.
+            end_time (datetime): The end time of the shift.
+            entity_type (str): Type of the entity, either "bus" or "driver".
+        
+        Raises:
+            ValidationError: If there are overlapping shifts for the entity.
+        """
         overlapping_shifts = BusShift.objects.exclude(pk=self.instance.pk).filter(
             **{entity_type: entity}
         )

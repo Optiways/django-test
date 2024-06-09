@@ -40,6 +40,8 @@ main:
  - `create_drivers`
  - `create_places`
  - `create_users`
+ - `create_bus_shifts`
+ - `create_bus_stops`
 
 Par exemple:
 

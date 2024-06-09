@@ -16,3 +16,26 @@ class Bus(models.Model):
 
     def __str__(self):
         return f"Bus: {self.licence_plate} (id: {self.pk})"
+    
+
+class BusShift(models.Model):
+    name = models.CharField('Name of the bus shift', max_length=100)
+    bus = models.OneToOneField(Bus, on_delete=models.CASCADE)
+    driver = models.OneToOneField(Driver, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"BusShift: {self.name} (id: {self.pk})"
+    
+    def clean(self):
+        print(self)
+
+
+class BusStop(models.Model):
+    name = models.CharField('Name of the bus stop', max_length=100)
+    time = models.DateTimeField()
+    place = models.OneToOneField('geography.Place', on_delete=models.CASCADE)
+    bus_shift = models.ForeignKey(BusShift, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"BusStop: {self.name} (id: {self.pk})"
+    

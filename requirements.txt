@@ -6,3 +6,5 @@ ipython==7.25.0
 
 factory-boy==3.2.0
 Faker==8.10.1
+flake8==4.0.1
+black==21.9b0

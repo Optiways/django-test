@@ -20,7 +20,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&r2)+_fdqxe2dtc@1vizr6tsh6!1cesaptlfgj@ug*%3=fnq=i'
+SECRET_KEY = (
+    'django-insecure-&r2)+_fdqxe2dtc@1vizr6tsh6!1cesaptlfgj@ug*%3=fnq=i'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     # Third party apps
     'django_extensions',
     # Internal apps
+    'padam_django.apps.travel',
     'padam_django.apps.common',
     'padam_django.apps.fleet',
     'padam_django.apps.geography',

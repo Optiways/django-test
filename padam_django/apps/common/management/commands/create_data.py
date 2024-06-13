@@ -12,3 +12,4 @@ class Command(BaseCommand):
         management.call_command('create_drivers', number=5)
         management.call_command('create_buses', number=10)
         management.call_command('create_places', number=30)
+        management.call_command('create_busshift', number=2)

@@ -5,7 +5,7 @@ from .models import BusShift, ScheduleStop
 
 
 @receiver(post_save, sender=ScheduleStop)
-def update_bus_shift_departure_or_arrival(sender, instance, **kwargs):
+def update_bus_shift_start_or_end(sender, instance, **kwargs):
     bus_shift = BusShift.objects.get(id=instance.bus_shift.id)
 
     if bus_shift.first_stop is None and bus_shift.last_stop is None:

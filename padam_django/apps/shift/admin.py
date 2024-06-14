@@ -14,6 +14,9 @@ class BusShiftAdmin(admin.ModelAdmin):
         "driver",
         "get_stop_count",
         "get_validation_stop_information",
+        "get_shift_start_information",
+        "get_shift_end_information",
+        "get_shift_duration_information",
     )
 
     @admin.display(description="Stop count")
@@ -27,12 +30,29 @@ class BusShiftAdmin(admin.ModelAdmin):
             return "Missing bus stops"
         return "Valid bus stops count"
 
+    @admin.display(description="Shift start")
+    def get_shift_start_information(self, obj):
+        return obj.first_stop
+
+    @admin.display(description="Shift end")
+    def get_shift_end_information(self, obj):
+        return obj.last_stop
+
+    @admin.display(description="Total duration (hours)")
+    def get_shift_duration_information(self, obj):
+        return obj.shift_duration
+
 
 @admin.register(BusStop)
 class BusStopAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("id", "name", "place")
 
 
 @admin.register(ScheduleStop)
 class ScheduleStopAdmin(admin.ModelAdmin):
     form = ScheduleStopForm
+    list_display = (
+        "bus_shift",
+        "bus_stop",
+        "arrival",
+    )

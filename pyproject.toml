@@ -1,0 +1,32 @@
+[tool.ruff]
+
+# Maximum line length to 120 characters.
+line-length = 120
+# Support Python 3.7+.
+target-version = "py37"
+src = ["."]
+
+# Rules to apply
+select = [
+  "E",   # pycodestyle
+  "W",   # pycodestyle
+  "F",   # pyflakes
+  "UP",  # pyupgrade
+  "I",   # isort
+]
+
+# List what was automatically fixed
+show-fixes=true
+
+# Exclude a variety of commonly ignored directories
+exclude = [
+    "__pypackages__",
+    "makefile",
+    "migrations/*",
+    "requirements/*",
+    ".env*",
+    ".git*",
+    ".ruff_cache",
+    "*.md",
+    "*.pyc",
+]

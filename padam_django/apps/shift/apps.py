@@ -6,4 +6,4 @@ class ShiftConfig(AppConfig):
     name = "padam_django.apps.shift"
 
     def ready(self):
-        pass
+        import padam_django.apps.shift.receivers  # noqa

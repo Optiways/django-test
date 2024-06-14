@@ -19,5 +19,3 @@ def update_bus_shift_departure_or_arrival(sender, instance, **kwargs):
     if instance.arrival > bus_shift.last_stop:
         bus_shift.last_stop = instance.arrival
         bus_shift.save()
-
-    return bus_shift

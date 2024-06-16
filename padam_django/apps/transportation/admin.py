@@ -5,7 +5,8 @@ from .forms import BusShiftForm
 @admin.register(BusShift)
 class BusShiftAdmin(admin.ModelAdmin):
     form = BusShiftForm
-    list_display = ('bus', 'driver', 'departure_time_display', 'arrival_time_display', 'shift_duration_display')
+    list_display = ('bus', 'driver', 'departure_time_display', 'arrival_time_display', 'shift_duration_display', 'stops_list')
+    list_filter = ('bus', 'driver')
 
     def departure_time_display(self, obj):
         return obj.departure_time
@@ -23,6 +24,11 @@ class BusShiftAdmin(admin.ModelAdmin):
             return f"{hours}h {minutes}m"
         return "Duration not available"
     shift_duration_display.short_description = "Shift Duration"
+
+    def stops_list(self, obj):
+        stops = obj.stops.all().order_by('arrival_time')
+        return ','.join(stop.place.name for stop in stops)
+    stops_list.short_description = "Stops"
 
 @admin.register(BusStop)
 class BusStopAdmin(admin.ModelAdmin):

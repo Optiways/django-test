@@ -1,17 +1,15 @@
 from django.contrib import admin
+from django.core.exceptions import ValidationError
 from .models import BusShift, BusStop
 from . import models
-
 
 @admin.register(models.Bus)
 class BusAdmin(admin.ModelAdmin):
     pass
 
-
 @admin.register(models.Driver)
 class DriverAdmin(admin.ModelAdmin):
     pass
-
 
 # Permet d'ajouter les arrêts directement dans le formulaire du trajet
 class BusStopInline(admin.TabularInline):
@@ -23,7 +21,11 @@ class BusShiftAdmin(admin.ModelAdmin):
     inlines = [BusStopInline]
     list_display = ('bus', 'driver', 'departure_time', 'arrival_time')
 
-    # Appele la méthode clean lors de la sauvegarde dans l'admin
-    def save_model(self, request, obj, form, change):
-        obj.full_clean()
-        super().save_model(request, obj, form, change)
+    def save_related(self, request, form, formsets, change):
+        # Appelle la méthode parente pour sauvegarder les inlines
+        super().save_related(request, form, formsets, change)
+
+        # Vérification du nombre d'arrêts après la sauvegarde des inlines
+        if form.instance.stops.count() < 2:
+            # Ajouter une erreur de validation spécifique au formulaire
+         raise ValidationError('Un trajet doit avoir au moins deux arrêts.')

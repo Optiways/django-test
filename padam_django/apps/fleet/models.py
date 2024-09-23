@@ -29,6 +29,10 @@ class BusShift(models.Model):
         # Vérifier que l'heure d'arrivée est après l'heure de départ
         if self.arrival_time <= self.departure_time:
             raise ValidationError('L\'heure d\'arrivée doit être après l\'heure de départ.')
+        
+         # Vérification des arrêts associés
+        if self.pk and self.stops.count() < 2:  # Vérification que le trajet existe et a moins de deux arrêts
+            raise ValidationError('Un trajet doit avoir au moins deux arrêts.')
 
         # Vérifier que le bus n'est pas déjà assigné à un autre trajet qui se chevauche
         overlapping_shifts_bus = BusShift.objects.filter(
@@ -47,10 +51,6 @@ class BusShift(models.Model):
         ).exclude(pk=self.pk)
         if overlapping_shifts_driver.exists():
             raise ValidationError('Ce chauffeur est déjà assigné à un autre trajet pendant cette période.')
-
-        # Vérifier qu'il y a au moins deux arrêts associés à ce trajet
-        if self.stops.count() < 2:
-            raise ValidationError('Un trajet doit avoir au moins deux arrêts.')
         
     def __str__(self):
         return f"Trajet {self.pk} - Bus {self.bus.licence_plate} - Chauffeur {self.driver.user.username}"

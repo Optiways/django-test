@@ -20,3 +20,6 @@ ENV/
 # Editors stuff
 .idea
 .vscode
+
+# Local stuff
+.python-version

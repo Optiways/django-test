@@ -108,10 +108,6 @@ Prérequis
 
 Étapes d'installation
 
-    Cloner le dépôt :
-
-    bash
-
 git clone <URL-de-votre-référentiel>
 cd <nom_du_dossier>
 

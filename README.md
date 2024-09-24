@@ -93,115 +93,136 @@ en temps que d'autres ...
  - Soyez prêt à présenter le sujet, à justifier vos choix et à parler de comment vous auriez fait les parties que vous avez laisser de côté.
 
 #############################################################################################################################################################
+# Projet Django - Gestion de Bus
 
+## Introduction
 
-Ce projet est une application Django permettant de gérer des bus, des chauffeurs, des trajets (BusShift) et des arrêts (BusStop). L'application fournit une interface d'administration pour créer et gérer ces entités, en assurant la cohérence et la validation des données.
+Ce projet est une application Django permettant de gérer des bus, des chauffeurs, des trajets (`BusShift`) et des arrêts (`BusStop`). L'application fournit une interface d'administration pour créer et gérer ces entités, en assurant la cohérence et la validation des données.
 
 Ce rendu est réalisé dans le cadre du test technique pour mon entretien avec Padam Mobility.
-Installation
-Prérequis
 
-    Python 3.6 ou supérieur
-    Django 3.2.5
-    pip (gestionnaire de paquets Python)
-    Un environnement virtuel est recommandé pour isoler les dépendances du projet.
+## Installation
 
-Étapes d'installation
+### Prérequis
 
-git clone <URL-de-votre-référentiel>
-cd <nom_du_dossier>
+- **Python 3.6** ou supérieur
+- **Django 3.2.5**
+- **pip** (gestionnaire de paquets Python)
+- Un environnement virtuel est recommandé pour isoler les dépendances du projet.
 
-Créer et activer un environnement virtuel :
+### Étapes d'installation
 
-# Créer l'environnement virtuel
-python -m venv venv
+1. **Cloner le dépôt :**
 
-# Activer l'environnement virtuel
-# Sur Windows
-venv\Scripts\activate
-# Sur macOS/Linux
-source venv/bin/activate
+   ```bash
+   git clone <URL-de-votre-référentiel>
+   cd <nom_du_dossier>
+   ```
 
-Installer les dépendances :
+2. **Créer et activer un environnement virtuel :**
 
-Assurez-vous que le fichier requirements.txt est présent à la racine du projet.
+   ```bash
+   # Créer l'environnement virtuel
+   python -m venv venv
 
-pip install -r requirements.txt
+   # Activer l'environnement virtuel
+   # Sur Windows
+   venv\Scripts\activate
+   # Sur macOS/Linux
+   source venv/bin/activate
+   ```
 
-Appliquer les migrations :
+3. **Installer les dépendances :**
 
-python manage.py migrate
+   Assurez-vous que le fichier `requirements.txt` est présent à la racine du projet.
 
-Créer un superutilisateur :
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-python manage.py createsuperuser
+4. **Appliquer les migrations :**
 
-Suivez les instructions pour définir le nom d'utilisateur et le mot de passe.
+   ```bash
+   python manage.py migrate
+   ```
 
-Lancer le serveur de développement :
+5. **Créer un superutilisateur :**
 
-    python manage.py runserver
+   ```bash
+   python manage.py createsuperuser
+   ```
 
-Créer des données via les scripts:
+   Suivez les instructions pour définir le nom d'utilisateur et le mot de passe.
 
-Des scripts sont à votre disposition pour vous permettre de rapidement créer de la donnée et de prendre le projet en main:
+6. **Lancer le serveur de développement :**
 
-    create_data
-    create_buses
-    create_drivers
-    create_places
-    create_users
+   ```bash
+   python manage.py runserver
+   ```
 
-Par exemple:
+7. **Accéder à l'application :**
 
-python manage.py create_drivers -n 5
+   - Application principale : `http://127.0.0.1:8000/`
+   - Interface d'administration : `http://127.0.0.1:8000/admin/`
 
+## Utilisation de l'application
 
+1. **Connexion à l'interface d'administration :**
 
-    Accéder à l'application :
-        Application principale : http://127.0.0.1:8000/
-        Interface d'administration : http://127.0.0.1:8000/admin/
+   Accédez à `http://127.0.0.1:8000/admin/` et connectez-vous avec le superutilisateur que vous avez créé précédemment.
 
-Utilisation de l'application
+2. **Gestion des Bus :**
 
-    Connexion à l'interface d'administration :
+   - Ajoutez de nouveaux bus en spécifiant leur plaque d'immatriculation unique.
 
-    Accédez à http://127.0.0.1:8000/admin/ et connectez-vous avec le superutilisateur que vous avez créé précédemment.
+3. **Gestion des Chauffeurs :**
 
+   - Créez des utilisateurs puis associez-les à des chauffeurs.
 
+4. **Création de Trajets (`BusShift`) :**
 
-    Création de Trajets (BusShift) :
-        Lors de la création d'un trajet, sélectionnez le bus et le chauffeur affectés.
+   - Lors de la création d'un trajet, sélectionnez le bus et le chauffeur affectés.
+   - Les heures de départ et d'arrivée sont supposées être calculées automatiquement en fonction des arrêts associés.
 
-    Ajout d'Arrêts (BusStop) :
-        Dans le formulaire de création/modification d'un trajet, ajoutez au moins deux arrêts.
-        Spécifiez l'ordre, le lieu et l'heure de passage pour chaque arrêt.
-        Assurez-vous que les heures de passage sont cohérentes avec l'ordre des arrêts.
+5. **Ajout d'Arrêts (`BusStop`) :**
 
-Problèmes Rencontrés et Solutions Proposées
+   - Dans le formulaire de création/modification d'un trajet, ajoutez au moins deux arrêts.
+   - Spécifiez l'ordre, le lieu et l'heure de passage pour chaque arrêt.
+   - Assurez-vous que les heures de passage sont cohérentes avec l'ordre des arrêts.
+
+## Problèmes Rencontrés et Solutions Proposées
 
 Bien que j'aie rencontré certains problèmes, je préfère les laisser tels quels pour le moment et je serais ravi de discuter des solutions possibles avec vous lors de notre entretien.
 
-    Gestion des Arrêts Uniques :
-        Problème : Lorsqu'il n'y a qu'un seul BusStop dans le formulaire d'ajout d'un BusShift, une erreur est levée, mais elle n'est pas correctement gérée dans le formulaire, contrairement aux autres cas.
-        Explication : Le système exige qu'un trajet ait au moins deux arrêts pour être valide. Cependant, le message d'erreur correspondant n'est pas affiché correctement à l'utilisateur.
+- **Gestion des Arrêts Uniques :**
 
-    Mise à Jour Automatique des Horaires de Départ et d'Arrivée :
-        Problème : Les horaires de départ et d'arrivée du BusShift ne sont pas automatiquement mis à jour en fonction des BusStop associés. J'ai écrit une fonction qui tente de le faire, mais je n'ai pas réussi à la faire fonctionner correctement.
-        Explication : Le problème est peut-être dû au fait que les heures de départ et d'arrivée sont sauvegardées avant que les BusStop ne soient créés, ce qui empêche la mise à jour automatique basée sur les horaires des arrêts.
+  - **Problème :** Lorsqu'il n'y a qu'un seul `BusStop` dans le formulaire d'ajout d'un `BusShift`, une erreur est levée, mais elle n'est pas correctement gérée dans le formulaire, contrairement aux autres cas.
+  - **Explication :** Le système exige qu'un trajet ait au moins deux arrêts pour être valide. Cependant, le message d'erreur correspondant n'est pas affiché correctement à l'utilisateur.
+
+- **Mise à Jour Automatique des Horaires de Départ et d'Arrivée :**
+
+  - **Problème :** Les horaires de départ et d'arrivée du `BusShift` ne sont pas automatiquement mis à jour en fonction des `BusStop` associés. J'ai écrit une fonction qui tente de le faire, mais je n'ai pas réussi à la faire fonctionner correctement.
+  - **Explication :** Le problème est peut-être dû au fait que les heures de départ et d'arrivée sont sauvegardées avant que les `BusStop` ne soient créés, ce qui empêche la mise à jour automatique basée sur les horaires des arrêts.
 
 Je serais heureux de discuter de ces problèmes et des solutions potentielles lors de notre entretien. Votre retour me sera très précieux pour améliorer cette application.
-Remarques
 
-    Cohérence des Données : Assurez-vous que les BusStop ont des heures de passage cohérentes avec leur ordre. L'heure de passage d'un arrêt doit être postérieure à celle de l'arrêt précédent.
+## Remarques
 
-    Nombre Minimum d'Arrêts : Un trajet doit comporter au moins deux arrêts. Cette contrainte est vérifiée lors de la sauvegarde, mais le message d'erreur pourrait être amélioré pour une meilleure expérience utilisateur.
+- **Cohérence des Données :** Assurez-vous que les `BusStop` ont des heures de passage cohérentes avec leur ordre. L'heure de passage d'un arrêt doit être postérieure à celle de l'arrêt précédent.
 
-    Extensions Possibles : Pour améliorer le projet, il serait envisageable de rendre les champs departure_time et arrival_time optionnels lors de la création initiale, puis obligatoires après la sauvegarde des BusStop, ou d'ajuster l'ordre des opérations de sauvegarde pour permettre la mise à jour automatique.
+- **Nombre Minimum d'Arrêts :** Un trajet doit comporter au moins deux arrêts. Cette contrainte est vérifiée lors de la sauvegarde, mais le message d'erreur pourrait être amélioré pour une meilleure expérience utilisateur.
 
-Contact
+- **Extensions Possibles :** Pour améliorer le projet, il serait envisageable de rendre les champs `departure_time` et `arrival_time` optionnels lors de la création initiale, puis obligatoires après la sauvegarde des `BusStop`, ou d'ajuster l'ordre des opérations de sauvegarde pour permettre la mise à jour automatique.
 
-Pour toute question ou suggestion, n'hésitez pas à me contacter à l'adresse suivante : frederictamiazzo@example.com
+## Contact
+
+Pour toute question ou suggestion, n'hésitez pas à me contacter à l'adresse suivante : [votre.adresse.email@example.com](mailto:votre.adresse.email@example.com)
+
+## Conclusion
+
+Ce projet a permis de mettre en pratique la gestion de modèles liés et les validations personnalisées dans Django. Malgré quelques défis techniques, notamment liés à l'ordre des opérations dans l'admin, les objectifs principaux ont été atteints.
+
+Merci de votre attention et bonne utilisation de l'application !
 
 
 

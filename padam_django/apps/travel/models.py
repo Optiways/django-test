@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from padam_django.apps.common.models import TsCreateUpdateMixin
@@ -54,6 +55,9 @@ class BusStop(TsCreateUpdateMixin):
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return f"User: {self.user.username}, Place: {self.place.name}, Time: {self.ts_requested.isoformat()} (id: {self.pk})"
+
 
 class StartBusStop(BusStop):
     """
@@ -88,3 +92,23 @@ class EndBusStop(BusStop):
     @property
     def user(self):
         return self.start.user
+
+    def clean(self):
+        super().clean()
+        start = self.start
+
+        start_place = start.place
+        if self.place == start_place:
+            raise ValidationError(
+                {
+                    "place": f"The itinerary is a round trip: {self.place.name} -> {start_place}",
+                }
+            )
+
+        start_requested = start.ts_requested
+        if self.ts_requested <= start_requested:
+            raise ValidationError(
+                {
+                    "ts_requested": f"The end date of the itinerary {self.ts_requested.isoformat()} can't be before the start date of the itinerary {start_requested.isoformat()}",
+                }
+            )

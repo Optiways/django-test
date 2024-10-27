@@ -1,6 +1,9 @@
 run: ## Run the test server.
 	python manage.py runserver_plus
 
+test: ## Run unittests.
+	python manage.py test
+
 makemigrations: ## Create migration files
 	python manage.py makemigrations
 

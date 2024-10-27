@@ -1,6 +1,12 @@
 run: ## Run the test server.
 	python manage.py runserver_plus
 
+makemigrations: ## Create migration files
+	python manage.py makemigrations
+
+migrate: ## Run new migrations
+	python manage.py migrate
+
 install: ## Install the python requirements.
 	pip install -r requirements.txt
 

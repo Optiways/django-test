@@ -198,26 +198,27 @@ class BusShift(TsCreateUpdateMixin, models.Model):
     def __str__(self):
         return f"Driver: {self.driver.user.username}, Bus: {self.bus.licence_plate} (id: {self.pk})"
 
-    def _get_stops(self):
+    @property
+    def stops(self):
         return self.end_bus_stops.select_related("start")
 
-    def _get_shift_boundaries(self):
-        return self._get_stops().aggregate(
+    def _get_shift_boundaries(self, shift_qs):
+        return shift_qs.aggregate(
             start=models.Min("start__ts_requested"),
             end=models.Max("ts_requested"),
         )
 
     @property
     def shift_start(self):
-        return self._get_shift_boundaries()["start"]
+        return self._get_shift_boundaries(self.stops)["start"]
 
     @property
     def shift_end(self):
-        return self._get_shift_boundaries()["end"]
+        return self._get_shift_boundaries(self.stops)["end"]
 
     @property
     def shift_duration(self):
-        boundary = self._get_shift_boundaries()
+        boundary = self._get_shift_boundaries(self.stops)
         if boundary["end"] and boundary["start"]:
             return boundary["end"] - boundary["start"]
         return None
@@ -265,11 +266,10 @@ class BusShift(TsCreateUpdateMixin, models.Model):
     def _clean_driver(self, shift_boundary):
         self._clean_object_available(self.driver, shift_boundary, field_name="driver")
 
-    def clean(self):
+    def clean_or_validate(self, stops):
         """
         Checking for stops will be done through form validation
         """
-        super().clean()
-        shift_boundary = self._get_shift_boundaries()
+        shift_boundary = self._get_shift_boundaries(stops)
         self._clean_bus(shift_boundary)
         self._clean_driver(shift_boundary)

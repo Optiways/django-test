@@ -86,6 +86,18 @@ class BusShiftForm(forms.ModelForm):
                 self.fields["stops"].queryset | end_bus_stops_qs
             )
 
+    def clean(self):
+        cleaned_data = super().clean()
+        stops = cleaned_data.pop("stops")
+
+        instance = models.BusShift(**cleaned_data)
+        if self.instance:
+            instance.pk = self.instance.pk
+
+        instance.clean_or_validate(stops)
+        cleaned_data["stops"] = stops
+        return cleaned_data
+
     def save(self, *args, **kwargs):
         instance = super().save(commit=False)
         instance.save()

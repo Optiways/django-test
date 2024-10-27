@@ -23,35 +23,35 @@ class TravelTestCase(TestCase):
 
         # Testing ts_requested validator
         with self.assertRaises(ValidationError):
-            start_bus_stop = StartBusStop.objects.create(
+            start_bus_stops = StartBusStop.objects.create(
                 user=user, place=place, ts_requested=wrong_ts_requested
             )
-            start_bus_stop.full_clean()
-        start_bus_stop.delete()
+            start_bus_stops.full_clean()
+        start_bus_stops.delete()
 
         ts_requested = now + datetime.timedelta(days=1)
-        start_bus_stop = StartBusStop.objects.create(
+        start_bus_stops = StartBusStop.objects.create(
             user=user, place=place, ts_requested=ts_requested
         )
-        start_bus_stop.full_clean()
+        start_bus_stops.full_clean()
 
         end_ts_requested = ts_requested + datetime.timedelta(minutes=30)
         with self.assertRaises(ValidationError):
-            end_bus_stop = EndBusStop.objects.create(
-                start=start_bus_stop, place=place, ts_requested=end_ts_requested
+            end_bus_stops = EndBusStop.objects.create(
+                start=start_bus_stops, place=place, ts_requested=end_ts_requested
             )
-            end_bus_stop.full_clean()
-        end_bus_stop.delete()
+            end_bus_stops.full_clean()
+        end_bus_stops.delete()
 
         end_place = Place.objects.exclude(pk=place.pk).first()
         with self.assertRaises(ValidationError):
-            end_bus_stop = EndBusStop.objects.create(
-                start=start_bus_stop, place=end_place, ts_requested=ts_requested
+            end_bus_stops = EndBusStop.objects.create(
+                start=start_bus_stops, place=end_place, ts_requested=ts_requested
             )
-            end_bus_stop.full_clean()
-        end_bus_stop.delete()
+            end_bus_stops.full_clean()
+        end_bus_stops.delete()
 
-        end_bus_stop = EndBusStop.objects.create(
-            start=start_bus_stop, place=end_place, ts_requested=end_ts_requested
+        end_bus_stops = EndBusStop.objects.create(
+            start=start_bus_stops, place=end_place, ts_requested=end_ts_requested
         )
-        end_bus_stop.full_clean()
+        end_bus_stops.full_clean()

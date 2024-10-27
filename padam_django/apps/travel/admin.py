@@ -33,9 +33,13 @@ class StartBusStopForm(BusStopFormMixin):
 @admin.register(models.StartBusStop)
 class StartBusStopAdmin(BusStopAdminMixin, admin.ModelAdmin):
     list_display = (
-        "pk",
-        "user",
-    ) + BusStopAdminMixin.list_display
+        (
+            "pk",
+            "user",
+        )
+        + BusStopAdminMixin.list_display
+        + ("end_bus_stops",)
+    )
 
     form = StartBusStopForm
 

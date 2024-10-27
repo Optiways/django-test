@@ -4,7 +4,6 @@ from padam_django.apps.geography.factories import PlaceFactory
 
 
 class Command(CreateDataBaseCommand):
-
     help = 'Create few places'
 
     def handle(self, *args, **options):

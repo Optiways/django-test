@@ -9,5 +9,6 @@ class UserAdmin(admin.ModelAdmin):
 
     def is_driver(self, obj):
         return obj.is_driver
+
     is_driver.boolean = True
     is_driver.short_description = 'Is driver'

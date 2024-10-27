@@ -58,6 +58,36 @@ class BusStop(TsCreateUpdateMixin):
     def __str__(self):
         return f"User: {self.user.username}, Place: {self.place.name}, Time: {self.ts_requested.isoformat()} (id: {self.pk})"
 
+    def _get_start_pk(self):
+        raise NotImplementedError
+
+    def _clean_overlapping_itinerary(self):
+        """
+        Checks if a created itinerary doesn't overlap with another one.
+        """
+        itinerary_qs = self.user.start_bus_stops.select_related(
+            "end_bus_stops"
+        ).exclude(end_bus_stops__isnull=True)
+        if self.pk:
+            itinerary_qs = itinerary_qs.exclude(pk=self._get_start_pk())
+
+        itinerary_list = itinerary_qs.values_list(
+            "ts_requested", "end_bus_stops__ts_requested"
+        )
+        for i in itinerary_list:
+            ts_start = i[0]
+            ts_end = i[1]
+            if ts_start <= self.ts_requested and self.ts_requested <= ts_end:
+                raise ValidationError(
+                    {
+                        "ts_requested": f"Can't start an itinerary because one is already planned for this time period: {ts_start.isoformat()} -> {ts_end.isoformat()}",
+                    }
+                )
+
+    def clean(self):
+        super().clean()
+        self._clean_overlapping_itinerary()
+
 
 class StartBusStop(BusStop):
     """
@@ -65,16 +95,35 @@ class StartBusStop(BusStop):
     if he wants it to be taken into account into the BusShift algorithm.
     """
 
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        "users.User",
+        verbose_name="User",
+        help_text="User that booked a bus",
+        on_delete=models.CASCADE,
+    )
 
     class Meta:
         unique_together = (("user", "place", "ts_requested"),)
+        default_related_name = "start_bus_stops"
         abstract = False
 
     @property
     def has_end(self) -> bool:
         """Define if the BusStop has an end."""
         return hasattr(self, "end")
+
+    def _get_start_pk(self):
+        return self.pk
+
+    def clean(self):
+        """
+        To simplify the test, we consider that the drivers are not able to set Bus Stop like passengers
+        """
+        super().clean()
+        if self.user.is_driver:
+            raise ValidationError(
+                {"user": f"The user {self.user.username} is a Driver."}
+            )
 
 
 class EndBusStop(BusStop):
@@ -83,10 +132,22 @@ class EndBusStop(BusStop):
     """
 
     start = models.OneToOneField(
-        "travel.StartBusStop", on_delete=models.CASCADE, related_name="end"
+        "travel.StartBusStop",
+        verbose_name="Starting BusStop",
+        help_text="Starting BusStop that will form an itinerary",
+        on_delete=models.CASCADE,
+    )
+    shift = models.ForeignKey(
+        "travel.BusShift",
+        verbose_name="Bus shift",
+        help_text="Bus shift that will handle these stops",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
     class Meta:
+        default_related_name = "end_bus_stops"
         abstract = False
 
     @property
@@ -112,3 +173,103 @@ class EndBusStop(BusStop):
                     "ts_requested": f"The end date of the itinerary {self.ts_requested.isoformat()} can't be before the start date of the itinerary {start_requested.isoformat()}",
                 }
             )
+
+    def _get_start_pk(self):
+        return self.start.pk
+
+
+class BusShift(TsCreateUpdateMixin, models.Model):
+    driver = models.ForeignKey(
+        "fleet.Driver",
+        verbose_name="Bus driver",
+        help_text="Driver for this shift",
+        on_delete=models.CASCADE,
+    )
+    bus = models.ForeignKey(
+        "fleet.Bus",
+        verbose_name="Bus",
+        help_text="Bus for this shift",
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        default_related_name = "shifts"
+
+    def __str__(self):
+        return f"Driver: {self.driver.user.username}, Bus: {self.bus.licence_plate} (id: {self.pk})"
+
+    @property
+    def stops(self):
+        return self.end_bus_stops.select_related("start")
+
+    def _get_shift_boundaries(self, shift_qs):
+        return shift_qs.aggregate(
+            start=models.Min("start__ts_requested"),
+            end=models.Max("ts_requested"),
+        )
+
+    @property
+    def shift_start(self):
+        return self._get_shift_boundaries(self.stops)["start"]
+
+    @property
+    def shift_end(self):
+        return self._get_shift_boundaries(self.stops)["end"]
+
+    @property
+    def shift_duration(self):
+        boundary = self._get_shift_boundaries(self.stops)
+        if boundary["end"] and boundary["start"]:
+            return boundary["end"] - boundary["start"]
+        return None
+
+    def _clean_object_available(self, obj, shift_boundary, field_name):
+        def raise_error_message(start, end):
+            raise ValidationError(
+                {
+                    field_name: f"The {field_name} is already booked for the period {start.isoformat()} -> {end.isoformat()}"
+                }
+            )
+
+        current_shift_start = shift_boundary["start"]
+        current_shift_end = shift_boundary["end"]
+
+        shifts_qs = obj.shifts.prefetch_related(
+            "end_bus_stops", "end_bus_stops__start_bus_stops"
+        )
+        if self.pk:
+            shifts_qs = shifts_qs.exclude(pk=self.pk)
+        shift_list = shifts_qs.values("pk").annotate(
+            start=models.Min("end_bus_stops__start__ts_requested"),
+            end=models.Max("end_bus_stops__ts_requested"),
+        )
+        for s in shift_list:
+            shift_start = s["start"]
+            shift_end = s["end"]
+            if (
+                (shift_start <= current_shift_end <= shift_end)
+                or (shift_start <= current_shift_start <= shift_end)
+                or (
+                    current_shift_start <= shift_start
+                    and shift_end <= current_shift_end
+                )
+            ):
+                raise_error_message(shift_start, shift_end)
+
+    def _clean_bus(self, shift_boundary):
+        self._clean_object_available(
+            self.bus,
+            shift_boundary,
+            field_name="bus",
+        )
+
+    def _clean_driver(self, shift_boundary):
+        self._clean_object_available(self.driver, shift_boundary, field_name="driver")
+
+    def clean_or_validate(self, stops):
+        """
+        Checking for stops will be done through form validation
+        """
+        shift_boundary = self._get_shift_boundaries(stops)
+        self._clean_bus(shift_boundary)
+        self._clean_driver(shift_boundary)

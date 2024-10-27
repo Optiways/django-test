@@ -3,8 +3,14 @@
 ```mermaid
 erDiagram
     User||--o{ StartBusStop: waits
+    User||--o| Driver: is
     User {
         Charfield username
+    }
+    Driver {
+    }
+    Bus {
+        CharField licence_plate
     }
     Place||--o{ BusStop: stops
     Place {
@@ -26,5 +32,10 @@ erDiagram
     StartBusStop {
     }
     EndBusStop {
+    }
+    BusShift}o--|| Driver: drives
+    BusShift}o--|| Bus: books
+    BusShift|o--|{ EndBusStop: stops
+    BusShift {
     }
 ```

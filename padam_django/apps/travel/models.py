@@ -115,6 +115,16 @@ class StartBusStop(BusStop):
     def _get_start_pk(self):
         return self.pk
 
+    def clean(self):
+        """
+        To simplify the test, we consider that the drivers are not able to set Bus Stop like passengers
+        """
+        super().clean()
+        if self.user.is_driver:
+            raise ValidationError(
+                {"user": f"The user {self.user.username} is a Driver."}
+            )
+
 
 class EndBusStop(BusStop):
     """
@@ -168,7 +178,7 @@ class EndBusStop(BusStop):
         return self.start.pk
 
 
-class BusShift(models.Model):
+class BusShift(TsCreateUpdateMixin, models.Model):
     driver = models.ForeignKey(
         "fleet.Driver",
         verbose_name="Bus driver",
@@ -186,14 +196,14 @@ class BusShift(models.Model):
         default_related_name = "shifts"
 
     def __str__(self):
-        return f"Driver: {self.driver.user.name}, Bus: {self.bus.licence_plate} (id: {self.pk})"
+        return f"Driver: {self.driver.user.username}, Bus: {self.bus.licence_plate} (id: {self.pk})"
 
     def _get_stops(self):
-        return self.end_bus_stops.select_related("start_bus_stops")
+        return self.end_bus_stops.select_related("start")
 
     def _get_shift_boundaries(self):
         return self._get_stops().aggregate(
-            start=models.Min("start_bus_stops__ts_requested"),
+            start=models.Min("start__ts_requested"),
             end=models.Max("ts_requested"),
         )
 
@@ -208,7 +218,9 @@ class BusShift(models.Model):
     @property
     def shift_duration(self):
         boundary = self._get_shift_boundaries()
-        return boundary["end"] - boundary["start"]
+        if boundary["end"] and boundary["start"]:
+            return boundary["end"] - boundary["start"]
+        return None
 
     def _clean_object_available(self, obj, shift_boundary, field_name):
         def raise_error_message(start, end):
@@ -227,7 +239,7 @@ class BusShift(models.Model):
         if self.pk:
             shifts_qs = shifts_qs.exclude(pk=self.pk)
         shift_list = shifts_qs.values("pk").annotate(
-            start=models.Min("end_bus_stops__start_bus_stops__ts_requested"),
+            start=models.Min("end_bus_stops__start__ts_requested"),
             end=models.Max("end_bus_stops__ts_requested"),
         )
         for s in shift_list:
@@ -255,7 +267,7 @@ class BusShift(models.Model):
 
     def clean(self):
         """
-        The check for existing stops will be done on the form side
+        Checking for stops will be done through form validation
         """
         super().clean()
         shift_boundary = self._get_shift_boundaries()

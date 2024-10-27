@@ -13,17 +13,21 @@ class BusStopAdminMixin:
     )
 
 
-class StartBusStopForm(forms.ModelForm):
+class BusStopFormMixin(forms.ModelForm):
     class Meta:
-        model = models.StartBusStop
         fields = (
-            "user",
             "place",
             "ts_requested",
             "ts_estimated",
             "ts_boarded",
             "has_boarded",
         )
+
+
+class StartBusStopForm(BusStopFormMixin):
+    class Meta:
+        model = models.StartBusStop
+        fields = ("user",) + BusStopFormMixin.Meta.fields
 
 
 @admin.register(models.StartBusStop)
@@ -36,17 +40,10 @@ class StartBusStopAdmin(BusStopAdminMixin, admin.ModelAdmin):
     form = StartBusStopForm
 
 
-class EndBusStopForm(forms.ModelForm):
+class EndBusStopForm(BusStopFormMixin):
     class Meta:
         model = models.EndBusStop
-        fields = (
-            "start",
-            "place",
-            "ts_requested",
-            "ts_estimated",
-            "ts_boarded",
-            "has_boarded",
-        )
+        fields = ("start",) + BusStopFormMixin.Meta.fields
 
 
 @admin.register(models.EndBusStop)

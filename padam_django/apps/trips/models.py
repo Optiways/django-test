@@ -1,6 +1,4 @@
 from django.db import models
-from django.core.exceptions import ValidationError
-from datetime import timedelta
 
 
 class BusStop(models.Model):

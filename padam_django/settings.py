@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'padam_django.apps.fleet',
     'padam_django.apps.geography',
     'padam_django.apps.users',
+    'padam_django.apps.trips',
 ]
 
 MIDDLEWARE = [

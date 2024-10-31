@@ -47,13 +47,6 @@ class BusShift(models.Model):
         duration (DurationField): Calculated total duration of the shift.
         start_time (DateTimeField): Calculated start time of the shift.
         end_time (DateTimeField): Calculated end time of the shift.
-
-    Methods:
-        clean(): Validates the shift before saving, ensuring unique times, at least two stops, and non-overlapping times.
-        _calculate_shift_times(): Sets start_time, end_time, and duration based on stops.
-        _validate_unique_shift(): Validates the shift does not overlap with another for the same bus or driver.
-        _validate_minimal_busstops_number(): Ensures a minimum of two stops are assigned.
-        save(): Overrides save to include validations before saving.
     """
 
     bus = models.ForeignKey(

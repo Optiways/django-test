@@ -9,7 +9,7 @@ class BusShiftForm(forms.ModelForm):
 
 
     def clean(self):
-        """ Validation of the criterias for the shifts """
+        """ Method to validate the form data based on all criteria """
         cleaned_data = super().clean()
         bus_stops = cleaned_data.get('bus_stops')
 

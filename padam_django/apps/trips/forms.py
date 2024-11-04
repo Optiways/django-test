@@ -64,10 +64,8 @@ class BusShiftForm(forms.ModelForm):
 
             self.instance.start_time = first_stop.stop_time
             self.instance.end_time = last_stop.stop_time
-            self.instance.duration = self.instance.end_time - self.instance.start_time
         else:
             self.instance.start_time = self.instance.end_time = None
-            self.instance.duration = timedelta(0)
 
     def _validate_unique_shift(self):
         """

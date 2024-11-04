@@ -54,11 +54,15 @@ class BusShift(models.Model):
         "fleet.Driver", on_delete=models.CASCADE, related_name="shifts"
     )
     stops = models.ManyToManyField("BusStop")
-    duration = models.DurationField("Duration", null=True, blank=True, editable=False)
     start_time = models.DateTimeField(
         "Start Time", null=True, blank=True, editable=False
     )
     end_time = models.DateTimeField("End Time", null=True, blank=True, editable=False)
+
+    @property
+    def duration(self):
+        if self.end_time and self.start_time:
+            return self.end_time - self.start_time
 
     def __str__(self):
         return f"Bus shift with Bus {self.bus} and driver {self.driver}"

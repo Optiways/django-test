@@ -19,6 +19,7 @@ class BusShiftModelTests(TestCase):
         self.place2 = Place.objects.create(name="Stop 2", longitude=0.1, latitude=0.1)
         self.stop_time1 = timezone.now()
         self.stop_time2 = self.stop_time1 + timedelta(minutes=10)
+        self.stop_time3 = self.stop_time1
 
     def create_user(self):
         """Helper method to create a user for the driver."""
@@ -69,7 +70,7 @@ class BusShiftModelTests(TestCase):
         BusStop.objects.create(name="Stop A", place=place, stop_time=timezone.now())
 
         with self.assertRaises(IntegrityError):
-            BusStop.objects.create(name="Stop A", place=place, stop_time=timezone.now())
+            BusStop.objects.create(name="Stop A", place=place, stop_time=self.stop_time3)
 
 
 class BusShiftFormTests(TestCase):

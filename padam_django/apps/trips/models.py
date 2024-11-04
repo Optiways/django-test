@@ -42,7 +42,6 @@ class BusShift(models.Model):
         bus (ForeignKey): The bus assigned to this shift.
         driver (ForeignKey): The driver assigned to this shift.
         stops (ManyToManyField): The sequence of bus stops for the shift.
-        duration (DurationField): Calculated total duration of the shift.
         start_time (DateTimeField): Calculated start time of the shift.
         end_time (DateTimeField): Calculated end time of the shift.
     """
@@ -61,6 +60,13 @@ class BusShift(models.Model):
 
     @property
     def duration(self):
+        """
+        Calculate the duration of the shift based on the start and end times.
+
+        Returns:
+            timedelta: The duration of the shift if both start_time and end_time are defined.
+            None: If either start_time or end_time is None, duration cannot be calculated.
+        """
         if self.end_time and self.start_time:
             return self.end_time - self.start_time
 

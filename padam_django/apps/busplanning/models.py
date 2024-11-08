@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import CheckConstraint, Q, F
 from ..fleet.models import Bus, Driver
 from ..geography.models import Place
 
@@ -9,7 +10,8 @@ class BusStop(models.Model):
 
     location = models.OneToOneField(
         Place,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        unique=True
     )
 
     def __str__(self):
@@ -17,6 +19,16 @@ class BusStop(models.Model):
 
 
 class BusShift(models.Model):
+    class Meta:
+        constraints = [
+            # A driver can only drive outside already allocated time
+            CheckConstraint(
+                check=Q(start_time__lte=F('end_time')),
+                name="start_before_end_constraint"
+            ),
+            #  TODO create custom constraints check ing against the DB existing records to avoid Duplicates schedule
+        ]
+
     driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)  # can be null but must raise an error
 
     bus = models.ForeignKey(Bus, on_delete=models.SET_NULL, null=True)  # can be null but must raise an error

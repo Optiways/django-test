@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Third party apps
     'django_extensions',
     # Internal apps
+    'padam_django.apps.busplanning',
     'padam_django.apps.common',
     'padam_django.apps.fleet',
     'padam_django.apps.geography',

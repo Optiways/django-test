@@ -26,7 +26,8 @@ class BusShift(models.Model):
                 check=Q(start_time__lte=F('end_time')),
                 name="start_before_end_constraint"
             ),
-            #  TODO create custom constraints check ing against the DB existing records to avoid Duplicates schedule
+            #  TODO create custom constraints check ing against the DB existing records to avoid Duplicates schedule,
+            #   equivalent of postgres exclusion constraint
         ]
 
     driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)  # can be null but must raise an error
@@ -36,10 +37,12 @@ class BusShift(models.Model):
     start_time = models.TimeField("Departure time", null=False)
     end_time = models.TimeField("Arrival time", null=False)
 
+    def __str__(self):
+        return f"Shift-{self.pk}: {self.driver} // {self.bus}: ({self.start_time}-{self.end_time})"
 
-class BusShiftStops(models.Model):
+class BusShiftStop(models.Model):
     class Meta:
-        db_table = 'bus_shift_stops'
+        db_table = 'bus_shift_stop'
         unique_together = (
             ("shift", "stop"),  # A stop cannot be twice in a same shift/path
             ("shift", "index"),

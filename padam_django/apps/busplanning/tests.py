@@ -58,10 +58,20 @@ class BusShiftTestCase(TestCase):
         except IntegrityError:
             pass
 
+        # TODO test form
+        # Those tests will fail because they don't use the form that checks for overlapping schedules
         e1: BusShift = BusShift(driver=driver, bus=bus, start_time=start_time_0, end_time=end_time_2)
         try:
             with transaction.atomic():
                 e1.save()
+            self.fail("No concurrent shifts allowed")
+        except IntegrityError:
+            pass
+
+        e2: BusShift = BusShift(driver=driver, bus=bus, start_time=start_time_0, end_time=end_time_2)
+        try:
+            with transaction.atomic():
+                e2.save()
             self.fail("No concurrent shifts allowed")
         except IntegrityError:
             pass

@@ -1,7 +1,7 @@
 from django.db import IntegrityError, transaction
 from django.db.models import QuerySet
 from django.test import TestCase
-from .models import BusStop, BusShift, BusShiftStops
+from .models import BusStop, BusShift, BusShiftStop
 from ..fleet.factories import DriverFactory, BusFactory
 from ..fleet.models import Driver, Bus
 from ..geography.factories import PlaceFactory
@@ -59,6 +59,7 @@ class BusShiftTestCase(TestCase):
             pass
 
         # TODO test form
+
         # Those tests will fail because they don't use the form that checks for overlapping schedules
         e1: BusShift = BusShift(driver=driver, bus=bus, start_time=start_time_0, end_time=end_time_2)
         try:

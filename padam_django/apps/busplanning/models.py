@@ -21,13 +21,14 @@ class BusStop(models.Model):
 class BusShift(models.Model):
     class Meta:
         constraints = [
-            # A driver can only drive outside already allocated time
             CheckConstraint(
                 check=Q(start_time__lte=F('end_time')),
-                name="start_before_end_constraint"
+                name="end_before_start_constraint"
             ),
+            # A driver can only drive outside already allocated time
             #  TODO create custom constraints check ing against the DB existing records to avoid Duplicates schedule,
             #   equivalent of postgres exclusion constraint
+            #   - Currently done with admin forms
         ]
 
     driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)  # can be null but must raise an error
@@ -39,6 +40,7 @@ class BusShift(models.Model):
 
     def __str__(self):
         return f"Shift-{self.pk}: {self.driver} // {self.bus}: ({self.start_time}-{self.end_time})"
+
 
 class BusShiftStop(models.Model):
     class Meta:

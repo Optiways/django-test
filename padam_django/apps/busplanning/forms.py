@@ -16,18 +16,23 @@ class BusShiftForm(forms.ModelForm):
         cleaned_data = super().clean()
         driver = cleaned_data["driver"]
         bus = cleaned_data["bus"]
-        start_time = cleaned_data["start_time"]
-        end_time = cleaned_data["end_time"]
+        departure = cleaned_data["start_time"]
+        arrival = cleaned_data["end_time"]
 
-        # get overlapping schedules for driver or buses
+        # Get overlapping schedules for driver or buses:
+        # For any driver or matching bus:
+        # - start_time < departure < end_time: if the departure overlaps
+        # - start_time < arrival < end_time: if the arrival overlaps
+        # - departure < star_time < arrival: if another shift begins during this one
+        # Any result os overlapping
         overlapping_shifts = BusShift.objects.filter(
             Q(
                 Q(driver=driver) | Q(bus=bus)
             ) &
             Q(
-                Q(start_time__lte=start_time, end_time__gte=start_time) |
-                Q(start_time__lte=end_time, end_time__gte=end_time) |
-                Q(start_time__gte=start_time, end_time__lte=end_time)
+                Q(start_time__lte=departure, end_time__gte=departure) |
+                Q(start_time__lte=arrival, end_time__gte=arrival) |
+                Q(start_time__gte=departure, end_time__lte=arrival)
             )
         )
         print(overlapping_shifts)

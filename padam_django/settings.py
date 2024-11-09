@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Third party apps
     'django_extensions',
     # Internal apps
+    'padam_django.apps.busplanning',
     'padam_django.apps.common',
     'padam_django.apps.fleet',
     'padam_django.apps.geography',
@@ -136,3 +137,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Added in case I wanted ot see the logs in testing
+# NOSE_ARGS = ['--nocapture', '--nologcapture',]

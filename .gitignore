@@ -10,7 +10,7 @@ __pycache__/
 
 # virtualenv
 venv/
-.venv/
+.venv*/
 ENV/
 # pipenv: https://github.com/kennethreitz/pipenv
 /Pipfile

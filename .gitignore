@@ -10,6 +10,7 @@ __pycache__/
 
 # virtualenv
 venv/
+.venv/
 ENV/
 # pipenv: https://github.com/kennethreitz/pipenv
 /Pipfile
@@ -20,3 +21,6 @@ ENV/
 # Editors stuff
 .idea
 .vscode
+
+# Secrets
+secrets.json

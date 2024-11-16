@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import json
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,8 +22,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+with open(os.path.join(BASE_DIR, "padam_django\\secrets.json")) as secrets_file:
+    secrets = json.load(secrets_file)
+
+
+def get_secret(setting, secrets=secrets):
+    """Get secret setting or fail with ImproperlyConfigured"""
+    try:
+        return secrets[setting]
+    except KeyError:
+        raise ImproperlyConfigured(
+            f"Failed to get {setting} setting. Please add it to secrets.json"
+        )
+    
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&r2)+_fdqxe2dtc@1vizr6tsh6!1cesaptlfgj@ug*%3=fnq=i'
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,6 +58,7 @@ INSTALLED_APPS = [
     'django_extensions',
     # Internal apps
     'padam_django.apps.common',
+    'padam_django.apps.shifts',
     'padam_django.apps.fleet',
     'padam_django.apps.geography',
     'padam_django.apps.users',
@@ -82,9 +99,13 @@ WSGI_APPLICATION = 'padam_django.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "padam_django_test",
+        "USER": "padam_django_test",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
+        "PASSWORD": get_secret("DB_PASSWORD"),
     }
 }
 

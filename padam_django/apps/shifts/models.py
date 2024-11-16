@@ -1,6 +1,11 @@
 from typing import Iterable, Union
 from django.db import models
 from django.core.exceptions import ValidationError
+from datetime import datetime
+
+
+def fmt_date_time(date_time: datetime):
+    return date_time.strftime("%d/%m/%Y à %H:%M")
 
 
 class BusStop(models.Model):
@@ -10,7 +15,8 @@ class BusStop(models.Model):
     def __str__(self):
         # TODO: Format date time to be human-readable
         return (
-            f"BusStop: '{self.place.name}' at {self.date_time} (id: {self.pk})"
+            f"BusStop: '{self.place.name}' [{fmt_date_time(self.date_time)}] "
+            f"(id: {self.pk})"
         )
 
 
@@ -29,6 +35,10 @@ class BusShift(models.Model):
         return self.stops.all().order_by("date_time").first()
 
     @property
+    def first_stop_date_time(self):
+        return self.first_stop.date_time if self.first_stop else None
+
+    @property
     def last_stop(self):
         return self.stops.all().order_by("date_time").last()
 
@@ -36,17 +46,15 @@ class BusShift(models.Model):
     def stops_count(self):
         return len(self.stops.all())
 
-
     def validate(self):
-        #TODO: Mutualize validation from BusShiftAdminForm + add check that both Bus and Driver are set
+        # TODO: Mutualize validation from BusShiftAdminForm + add check that both Bus and Driver are set
         # Skip validation if the object is not saved yet (no primary key)
         if not self.pk:
             return
-        
 
     @property
     def is_valid(self) -> bool:
-        """Check that the BusShift is fully ready (does not violate 
+        """Check that the BusShift is fully ready (does not violate
         constraints and has both a Driver and a Bus assigned to.
 
         Returns:
@@ -83,7 +91,8 @@ class BusShift(models.Model):
         driver_last_name = self.driver.user.last_name if self.driver else ""
         return (
             f"BusShift: {bus_license_plate} "
-            f"[{self.first_stop.date_time} - {self.last_stop.date_time}] "
+            f"[{fmt_date_time(self.first_stop.date_time)} - "
+            f"{fmt_date_time(self.last_stop.date_time)}] "
             f"conducted by {driver_first_name} {driver_last_name} "
             f"(id: {self.pk})"
         )

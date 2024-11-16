@@ -76,9 +76,10 @@ class BusShiftAdminForm(forms.ModelForm):
 @admin.register(models.BusShift)
 class BusShiftAdmin(admin.ModelAdmin):
     # TODO: ordering (by first stop date_time)
-
+    
     list_display = (
         "pk",
+        "first_stop_date_time",
         "bus",
         "driver",
         "stops_count",

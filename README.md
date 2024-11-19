@@ -15,8 +15,8 @@ Pour réaliser le test, pensez à fork ce repository. Idéalement, ouvrir une PR
 
 | Nom    | Version |
 | ------ | ------- |
-| Python | 3.7     |
-| Django | 3.2.5   |
+| Python | 3.9     |
+| Django | 4.2.16  |
 
  - Le projet à été réalisé en utilisant Python 3.7. Vous êtes libre d'utiliser une autre version mais c'est celle que 
  nous vous conseillons.

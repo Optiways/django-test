@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 
 
 class CreateDataBaseCommand(BaseCommand):
-
     def __init__(self, *args, **kwargs):
         self.number = None
         super().__init__(*args, **kwargs)

@@ -4,7 +4,6 @@ from padam_django.apps.fleet.factories import DriverFactory
 
 
 class Command(CreateDataBaseCommand):
-
     help = 'Create few drivers'
 
     def handle(self, *args, **options):

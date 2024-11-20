@@ -4,7 +4,6 @@ from django.core import management
 
 
 class Command(BaseCommand):
-
     help = 'Create test data'
 
     def handle(self, *args, **options):

@@ -1,0 +1,2 @@
+BusShiftTestCase.test_available_shift:
+- db: 'SELECT (#) AS "a" FROM "schedules_busstop" INNER JOIN "schedules_busshift" ON ("schedules_busstop"."shift_id" = "schedules_busshift"."id") WHERE ("schedules_busshift"."bus_id" = # OR "schedules_busshift"."driver_id" = #) GROUP BY "schedules_busstop"."shift_id", (#) HAVING (MIN("schedules_busstop"."stoptime") BETWEEN # AND # OR MAX("schedules_busstop"."stoptime") BETWEEN # AND # OR (MAX("schedules_busstop"."stoptime") >= # AND MIN("schedules_busstop"."stoptime") <= #)) LIMIT #'

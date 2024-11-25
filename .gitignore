@@ -20,3 +20,5 @@ ENV/
 # Editors stuff
 .idea
 .vscode
+
+myenv

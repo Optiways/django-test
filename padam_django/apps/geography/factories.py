@@ -15,3 +15,9 @@ class PlaceFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = models.Place
+
+class BusStopFactory(factory.django.DjangoModelFactory):
+    place = factory.SubFactory(PlaceFactory)
+
+    class Meta:
+        model = models.BusStop

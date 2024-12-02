@@ -4,7 +4,6 @@ from padam_django.apps.users.factories import UserFactory
 
 
 class Command(CreateDataBaseCommand):
-
     help = 'Create few users'
 
     def handle(self, *args, **options):

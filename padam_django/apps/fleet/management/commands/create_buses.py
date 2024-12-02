@@ -4,7 +4,6 @@ from padam_django.apps.fleet.factories import BusFactory
 
 
 class Command(CreateDataBaseCommand):
-
     help = 'Create few buses'
 
     def handle(self, *args, **options):

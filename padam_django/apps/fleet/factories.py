@@ -1,7 +1,11 @@
 import factory
 from faker import Faker
 
+# Django import.
+from django import forms
+
 from . import models
+
 
 
 fake = Faker(['fr'])
@@ -19,3 +23,4 @@ class BusFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = models.Bus
+
